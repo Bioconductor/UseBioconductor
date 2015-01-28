@@ -4,8 +4,7 @@ Use R / Bioconductor for Sequence Analysis
 Genentech, San Francisco, CA<br />
 4 February 2015
 
-Contact: Martin Morgan (content,
-[mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org))
+Contact: Martin Morgan ([mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org))
 
 This course is directed at intermediate users wanting to make
 effective use of _R_ and _[Bioconductor](http://bioconductor.org)_ for
@@ -15,8 +14,10 @@ available in _Bioconductor_, including and in-depth look at the
 central _GenomicRanges_ infrastructure. The afternoon provides
 approaches to common challenges -- working with large data, placing
 statistical results in biological context, and effectively and
-reliably communicating results with other team members.
-
+reliably communicating results with other team members.  The course
+combines lectures with extensive hands-on practicals; participants are
+required to bring a laptop with wireless internet access and a modern
+version of the Chrome or Safari web browser.
 
 Schedule (tentative)
 --------------------
