@@ -1,7 +1,7 @@
-Learning R / Bioconductor for Sequence Analysis
-===============================================
+Use R / Bioconductor for Sequence Analysis
+==========================================
 
-Genentech, San Francisco, CAA<br />
+Genentech, San Francisco, CA<br />
 4 February 2015
 
 Contact: Martin Morgan (content,
