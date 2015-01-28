@@ -1,0 +1,25 @@
+Package: UseBioconductor
+Type: Package
+Title: Use R / Bioconductor for Sequence Analysis
+Version: 0.0.1
+Authors@R: c(person("Martin", "Morgan", role=c("aut", "cre"),
+                    email="mtmorgan@fhcrc.org"),
+             person("Herve", "Pages", role="aut"))
+License: Artistic-2.0
+VignetteBuilder: knitr
+Description: This course is directed at intermediate users wanting to
+    make effective use of R / Bioconductor for the analysis and
+    comprehension of high-throughput sequence data using R and
+    Bioconductor. The README.md file in the root directory of the
+    package gitub repository outlines detailed content. The course
+    combines lectures with extensive hands-on practicals; participants
+    are required to bring a laptop with wireless internet access and a
+    modern version of the Chrome or Safari web browser.
+Suggests: knitr, BiocStyle, BiocInstaller, ALL,
+    BSgenome.Hsapiens.UCSC.hg19, BiocParallel, Biostrings,
+    GenomicAlignments, GenomicFeatures, Gviz, MLSeq, PoiClaClu,
+    RColorBrewer, RNAseqData.HNRNPC.bam.chr14, Rsamtools, ShortRead,
+    TxDb.Hsapiens.UCSC.hg19.knownGene, VariantAnnotation, airway,
+    class, cn.mops, dendextend, fission, genefilter, ggplot2, gplots,
+    org.Hs.eg.db, sva, xtable, PoiClaClu, sva, fission, kernlab,
+    e1071
