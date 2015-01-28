@@ -27,7 +27,6 @@ Day 1: Use _R_ / _Bioconductor_
   infrastructure in the high-throughput sequencing landscape
 - 10:00 - 11:45 GenomicRanges design and use for data and annotation
 - 11:45 - 12:30 A high-level tour of new and relevant packages
-
 - 1:30 - 2:30 Working with large data and collections of genomic files
 - 2:30 - 3:15 Package, web, and cloud-based annotation resources
 - 3:30 - 4:15 Genome-specific visualization and reports
