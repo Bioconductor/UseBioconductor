@@ -29,7 +29,8 @@ Day 1: Use _R_ / _Bioconductor_
 - 10:00 - 11:45 GenomicRanges design and use for data and annotation
 - 11:45 - 12:30 A high-level tour of new and relevant packages
 - 1:30 - 2:30 Working with large data and collections of genomic files
-- 2:30 - 3:15 Package, web, and cloud-based annotation resources
-- 3:30 - 4:15 Genome-specific visualization and reports
-- 4:15 - 4:45 Interactivity
+- 2:30 - 3:30 Package, web, and cloud-based annotation resources,
+  including use of data base and web service resources
+- 3:45 - 4:45 Genome-specific visualization and reports, including
+  interactivity
 - 4:45 - 5:00 Summary

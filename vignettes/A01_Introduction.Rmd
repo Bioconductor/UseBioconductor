@@ -1,0 +1,56 @@
+<!--
+%\VignetteIndexEntry{01. Use R / Bioconductor for Sequence Analysis}
+%\VignettePackage{UseBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(UseBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.1")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Use R / Bioconductor for Sequence Analysis
+
+This package contains training material for a Winter, 2014
+intermediate _R_ / _Bioconductor_ course "Use _R_ / _Bioconductor_ for
+Sequence Analysis", offered February 4, Genentech, San Francisco, CA.
+
+This course is directed at intermediate users wanting to make
+effective use of _R_ and _[Bioconductor](http://bioconductor.org)_ for
+the analysis and comprehension of high-throughput sequence data. The
+morning provides overall orientation to the packages and facilities
+available in _Bioconductor_, including and in-depth look at the
+central _GenomicRanges_ infrastructure. The afternoon provides
+approaches to common challenges -- working with large data, placing
+statistical results in biological context, and effectively and
+reliably communicating results with other team members.  
+
+The course combines lectures with extensive hands-on practicals;
+participants are required to bring a laptop with wireless internet
+access and a modern version of the Chrome or Safari web browser.
+
+## Schedule (tentative)
+
+Use _R_ / _Bioconductor_
+
+- 9:00 - 10:00
+  [Introduction to _Bioconductor_](A01.1_IntroductionToBioconductor.html):
+  package and class infrastructure in the high-throughput sequencing
+  landscape
+- 10:00 - 11:45 [GenomicRanges](A01.2_GenomicRanges.html)
+  design and use for data and annotation 
+- 11:45 - 12:30 A high-level tour of
+  [new and relevant packages](A01.3_NewPackages.html)
+- 1:30 - 2:30 [Working with large data](A01.3_LargeData.html) and
+  collections of [genomic files](A01.4_GenomicFiles.html)
+- 2:30 - 3:30 Package, web, and cloud-based
+  [annotation resources](A01.5_Annotation.html), including use of data
+  base and web service resources
+- 3:45 - 4:45 Genome-specific
+  [visualization and reports](A01.6_Visualization.html), including
+  interactivity
+- 4:45 - 5:00 Summary
