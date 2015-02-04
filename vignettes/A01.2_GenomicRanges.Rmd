@@ -29,6 +29,14 @@ February 4, 2015
 
   ![GRanges](our_figures/GRangesList.png)
 
+Methods (e.g., [Table 2](http://bioconductor.org/help/course-materials/2014/SeattleFeb2014/Ranges.pdf)
+
+- intra-range
+
+- inter-range
+
+- between
+
 ## Ranges infrastructure
 
 Class hierarchy: `Annotated` / `Vector` / `List` / `GenomicRanges`
