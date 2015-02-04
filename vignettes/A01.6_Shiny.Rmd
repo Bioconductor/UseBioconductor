@@ -155,18 +155,18 @@ information about _how_ to upload the file.
 Return to your browser, re-load the page, and check out what you can do!
 
 b. Implement the actual data input on the server. This uses the
-`renderTable` function to return a table to the user interface. The
+`renderDataTable` function to return a table to the user interface. The
 `"dataFile"` variable is NULL if the user has not selected a file, and
 has several elements if the user has selected a file.
 
     library(shiny)
         
     shinyServer(function(input, output) {
-        output$toptable <- renderTable({
+        output$toptable <- renderDataTable({
             if (is.null(input$datafile))
                 return(NULL)
             read.csv(input$datafile$datapath)
-        })
+        }, options=list(pageLength=5))
     })
     
 You should be able to re-load your page in the browser, but there is
@@ -181,7 +181,7 @@ c. Finally, modify `ui.R` to display the head of the table
         sidebarPanel(
             fileInput('datafile', 'Choose topTable CSV File')),
         mainPanel(
-            tableOutput('toptable'))
+            dataTableOutput('toptable'))
     ))
     
 Check out what you've created now.
@@ -202,11 +202,11 @@ required libraries in the server.
         
     shinyServer(function(input, output) {
 
-        output$toptable <- renderTable({
+        output$toptable <- renderDataTable({
             if (is.null(input$datafile))
                 return(NULL)
             read.csv(input$datafile$datapath)
-        })
+        }, options=list(pageLength=5))
     
         output$volcano <- renderPlot({
             if (is.null(input$datafile))
@@ -225,8 +225,8 @@ c. And for displaying the plot (first, above the table)
         sidebarPanel(
             fileInput('datafile', 'Choose topTable CSV File')),
         mainPanel(
-            plotOutput('volcano', width="400px"),
-            tableOutput('toptable'))
+            dataTableOutput('toptable'),
+            plotOutput('volcano', width="400px"))
     ))
     
 Check out your handiwork! (How do I know what to do? I'm reading the
@@ -257,14 +257,14 @@ Check out your handiwork! (How do I know what to do? I'm reading the
                 read.csv(input$datafile$datapath)
             })
         
-            output$toptable <- renderTable({
+            output$toptable <- renderDataTable({
                 csv <- dataInput()
                 if (is.null(csv))
                     return(NULL)
                 o <- order(abs(csv$log2FoldChange),
                     decreasing=TRUE)
                 csv[head(o, 20),]
-            })
+            }, options=list(pageLength=5))
         
             output$volcano <- renderPlot({
                 csv <- dataInput()

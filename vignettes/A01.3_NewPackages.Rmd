@@ -52,6 +52,8 @@ February 3, 2015
 
 `findOverlaps()`: significant performance improvements
 
+`AnnotationDbi::mapIds()`
+
 ## Contributed packages
 
 `r Biocpkg("csaw")`
