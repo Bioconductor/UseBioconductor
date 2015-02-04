@@ -1,0 +1,283 @@
+<!--
+%\VignetteIndexEntry{01.6 Interactive reports -- shiny}
+%\VignettePackage{UseBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(UseBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.1")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Shiny ([http://www.rstudio.com/shiny/][shiny])
+
+Interactive graphics displayed in a web browser. Very easy to
+create. Our task -- create an interactive volcano plot for viewing the
+output of differential expression analysis.
+
+# Step 1: It Works!
+
+Create a folder for our project; call it `Volcano`. Now add two
+plain-text files `ui.R` and `server.R`.
+
+    |-- Volcano
+        |-- ui.R
+        |-- server.R
+
+Add the following code to `ui.R`. This specifies the 'user interface'
+to be a page with a side-bar. The page will have a header at the top,
+a side bar panel, and a main panel.
+
+    library(shiny)
+
+    shinyUI(pageWithSidebar(
+        headerPanel("Volcano!"),
+        sidebarPanel(),
+        mainPanel()
+    ))
+    
+Now add the following code to `server.R`. This doesn't do anything!
+
+    library(shiny)
+    
+    shinyServer(function(input, output) {
+    })
+    
+OK, now, start R and run the following commands. Make sure the
+argument to `runApp` is the path to the folder you created.
+
+    library(shiny)
+    runApp("Volcano")
+
+That's it! Not very exciting. 
+
+# Step 2: greetings person how R you?
+
+Keep your R session and web browser running. 
+
+a. Let's ask the user to identify themselves by editing `ui.R` ...
+
+    library(shiny)
+    
+    shinyUI(pageWithSidebar(
+        headerPanel("Volcano!"),
+        sidebarPanel(
+            textInput("name", "Your name:")),
+        mainPanel()
+    ))
+    
+Return to your browser, re-load the page, and check out what you can
+do! See an error? Probably you forgot a comma at the end of a line or
+made another mistake. Read the error, correct `ui.R`, and reload the
+page.
+
+b. OK, the `server.R` is going to take your input and return some
+output. It does this using the arguments `input` and `output`. Each of
+these is a list, with elements named after fields (like `"name"`,
+above) or return values. The following takes the name input by user,
+creates a greeting, and renders the result in a way that `shiny` can
+work with.
+
+    library(shiny)
+        
+    shinyServer(function(input, output) {
+        output$greeting <- renderText(
+            paste("greetings", input$name, "how R you?"))
+    })
+    
+You should be able to re-load the page in the browser. It might be the
+case that the screen goes grey, in which case there is an error in
+your server code. Check back at where you started R to see what is
+going wrong, fix the problem, and re-load the page.
+
+c. Notice that `shiny` doesn't appear to do anything when you enter a
+name. Actually, it's waiting to _have_ to do something -- so far,
+there's no feedback for the user, so no need to formulate a
+greeting. So...
+
+In the `ui.R` file, arrange for the greeting to be displayed by
+updating the `mainPanel`:
+
+    library(shiny)
+    
+    shinyUI(pageWithSidebar(
+        headerPanel("Volcano!"),
+        sidebarPanel(
+            textInput("name", "Your name:")),
+        mainPanel(
+            textOutput('greeting'))
+    ))
+    
+Reload the page in the browser and try entering or changing your
+name. Try editing the server code so that it only responds if the user
+has entered a name.
+
+    library(shiny)
+        
+    shinyServer(function(input, output) {
+        output$greeting <- renderText({
+            if (nchar(input$name) == 0)
+                character()
+            else
+                paste("greetings", input$name, "how R you?")
+        })
+    })
+
+Cool!
+
+# Volcano! data
+
+We'll go through the same same routine, modify the user interface to
+accept different input, then the server to respond to the new input,
+and finally the user interface that will trigger the server. The
+instructions are shorter, because the changes are pretty
+self-explanatory.
+
+a. Add a `fileInput()` widget to your user interface. The
+`'dataFile'` string is the name of a variable that will contain
+information about _how_ to upload the file.
+
+    library(shiny)
+    
+    shinyUI(pageWithSidebar(
+        headerPanel("Volcano!"),
+        sidebarPanel(
+            fileInput("datafile", "Choose topTable CSV File")),
+        mainPanel()
+    ))
+    
+Return to your browser, re-load the page, and check out what you can do!
+
+b. Implement the actual data input on the server. This uses the
+`renderTable` function to return a table to the user interface. The
+`"dataFile"` variable is NULL if the user has not selected a file, and
+has several elements if the user has selected a file.
+
+    library(shiny)
+        
+    shinyServer(function(input, output) {
+        output$toptable <- renderTable({
+            if (is.null(input$datafile))
+                return(NULL)
+            read.csv(input$datafile$datapath)
+        })
+    })
+    
+You should be able to re-load your page in the browser, but there is
+not any new functionality visible.
+
+c. Finally, modify `ui.R` to display the head of the table
+    
+    library(shiny)
+    
+    shinyUI(pageWithSidebar(
+        headerPanel("Volcano!"),
+        sidebarPanel(
+            fileInput('datafile', 'Choose topTable CSV File')),
+        mainPanel(
+            tableOutput('toptable'))
+    ))
+    
+Check out what you've created now.
+
+# Volcano!
+
+Let's now create a volcano plot.  
+
+a. We don't need to change the user input, so jump directly to (b).
+
+b. First we'll implement this to read in the data, but we'll change
+that... I'll make my plot using `lattice`, but use `ggplot2` or
+whatever environment you'd like; remember to load any additional
+required libraries in the server.
+
+    library(shiny)
+    library(lattice)
+        
+    shinyServer(function(input, output) {
+
+        output$toptable <- renderTable({
+            if (is.null(input$datafile))
+                return(NULL)
+            read.csv(input$datafile$datapath)
+        })
+    
+        output$volcano <- renderPlot({
+            if (is.null(input$datafile))
+                return(NULL)
+            csv <- read.csv(input$datafile$datapath)
+            print(xyplot(-log10(pvalue) ~ log2FoldChange, csv))
+        })
+    })
+    
+c. And for displaying the plot (first, above the table)
+
+    library(shiny)
+    
+    shinyUI(pageWithSidebar(
+        headerPanel("Volcano!"),
+        sidebarPanel(
+            fileInput('datafile', 'Choose topTable CSV File')),
+        mainPanel(
+            plotOutput('volcano', width="400px"),
+            tableOutput('toptable'))
+    ))
+    
+Check out your handiwork! (How do I know what to do? I'm reading the
+[shiny tutorial][shiny] and looking at the help pages, e.g.,
+`?plotOutput`).
+
+# Exercises
+
+1. Clean up the server code so that only one function reads in the
+   data. Use the `reactive` function to indicate that the data input
+   depends on user input. Adjust the top table and volcano plot
+   functions to use this single data input function.
+
+2. Update the server code to order the top table from largest to
+   smallest absolute value log fold change, and to return only the top
+   20 values for visualization.
+
+   After exercises 1 and 2 my `server.R` looks like
+   
+        library(shiny)
+        library(lattice)
+           
+        shinyServer(function(input, output) {
+        
+            dataInput <- reactive({
+                if (is.null(input$datafile))
+                    return(NULL)
+                read.csv(input$datafile$datapath)
+            })
+        
+            output$toptable <- renderTable({
+                csv <- dataInput()
+                if (is.null(csv))
+                    return(NULL)
+                o <- order(abs(csv$log2FoldChange),
+                    decreasing=TRUE)
+                csv[head(o, 20),]
+            })
+        
+            output$volcano <- renderPlot({
+                csv <- dataInput()
+                if (is.null(csv))
+                    return(NULL)
+                print(xyplot(-log10(pvalue) ~ log2FoldChange, csv))
+            })
+        })
+           
+3. Add some input widgets to `ui.R`, e.g., to allow the user to
+   specify different arguments to `read.csv`, and implement these in
+   `server.R`.
+
+4. Check out the `r Biocpkg("ReportingTools")` and 
+   `r Biocpkg("AnalysisPageServer")` packages for
+   pre-built interactive reports.
+
+[shiny]: http://www.rstudio.com/shiny/

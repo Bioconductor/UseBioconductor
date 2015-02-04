@@ -5,7 +5,7 @@
 -->
 
 ```{r setup, echo=FALSE}
-library(LearnBioconductor)
+library(UseBioconductor)
 stopifnot(BiocInstaller::biocVersion() == "3.1")
 ```
 
@@ -70,8 +70,8 @@ Class hierarchy: `Annotated` / `Vector` / `List` / `GenomicRanges`
 
 ## *List
 
-- Implementation -- vector + partitioning Consequences: efficient
-  (`unlist()` / `relist()`) vs. inefficient (`endoapply()`)
-  algorithms.
+- Implementation -- vector + partitioning
+- Consequences: efficient (`unlist()` / `relist()`) vs. 
+  inefficient (`endoapply()`) algorithms.
 
 ## Exercise

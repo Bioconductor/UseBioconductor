@@ -45,8 +45,8 @@ Use _R_ / _Bioconductor_
   design and use for data and annotation 
 - 11:45 - 12:30 A high-level tour of
   [new and relevant packages](A01.3_NewPackages.html)
-- 1:30 - 2:30 [Working with large data](A01.3_LargeData.html) and
-  collections of [genomic files](A01.4_GenomicFiles.html)
+- 1:30 - 2:30 [Working with large data](A01.4_LargeData.html) and
+  collections of genomic files.
 - 2:30 - 3:30 Package, web, and cloud-based
   [annotation resources](A01.5_Annotation.html), including use of data
   base and web service resources

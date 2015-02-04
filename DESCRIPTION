@@ -1,7 +1,7 @@
 Package: UseBioconductor
 Type: Package
 Title: Use R / Bioconductor for Sequence Analysis
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(person("Martin", "Morgan", role=c("aut", "cre"),
                     email="mtmorgan@fhcrc.org"),
              person("Herve", "Pages", role="aut"))
@@ -22,4 +22,4 @@ Suggests: knitr, BiocStyle, BiocInstaller, ALL,
     TxDb.Hsapiens.UCSC.hg19.knownGene, VariantAnnotation, airway,
     class, cn.mops, dendextend, fission, genefilter, ggplot2, gplots,
     org.Hs.eg.db, sva, xtable, PoiClaClu, sva, fission, kernlab,
-    e1071
+    e1071, microbenchmark, GenomicFiles, httr, AnnotationHub, shiny
