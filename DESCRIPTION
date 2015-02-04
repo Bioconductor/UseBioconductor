@@ -1,7 +1,7 @@
 Package: UseBioconductor
 Type: Package
 Title: Use R / Bioconductor for Sequence Analysis
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: c(person("Martin", "Morgan", role=c("aut", "cre"),
                     email="mtmorgan@fhcrc.org"),
              person("Herve", "Pages", role="aut"))

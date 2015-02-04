@@ -381,6 +381,16 @@ hispanic <- tbl(d, "count") %>%
 semi_join(tbl(d, "variant"), hispanic)
 ```
 
+## Data base access (advanced)
+
+- _Bioconductor_ annotation packages are based on _sqlite_ databases.
+- `r CRANpkg("dplry")` provides convenient access via `src_sqlite`,
+  `tbl`, `filter`, `arrange`, `summarize`, etc.
+
+Exercise: use `AnnotationDbi::dbfile()` on a TxDb object `gene` table
+to filter just those genes on chr3. Pipe this select to
+`makeGRangesFromDataFrame` to get a `GRanges` instance.
+
 ## Web resources (advanced)
 
 'Easy' to write web-based services, e.g., to query ENSEMBL
