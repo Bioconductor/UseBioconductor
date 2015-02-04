@@ -65,5 +65,7 @@ See [slides](GRanges_and_GRangesList_slides.pdf).
   
 ## Exercises
 
-See HOWTOs vignette in the `r Biocpkg("GenomicRanges")` package.
+See HOWTOs vignette in the `r Biocpkg("GenomicRanges")` package
+
+- e.g., Exercise 2.12 (using `r Biocannopkg("RNAseqData.HNRNPC.bam.chr14")`), 2.13, 2.16
 
