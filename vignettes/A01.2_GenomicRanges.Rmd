@@ -1,0 +1,69 @@
+<!--
+%\VignetteIndexEntry{01.2 Genomic Ranges}
+%\VignettePackage{UseBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(LearnBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.1")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+knitr::opts_chunk$set(tidy=FALSE)
+```
+
+# Genomic Ranges
+
+Martin Morgan, Herv&eacute; Pag&egrave;s<br/>
+February 4, 2015
+
+## Recall: Genomic Ranges
+
+- `GRanges`
+
+  ![GRanges](our_figures/GRanges.png)
+
+- `GRangesList`
+
+  ![GRanges](our_figures/GRangesList.png)
+
+## Ranges infrastructure
+
+Class hierarchy: `Annotated` / `Vector` / `List` / `GenomicRanges`
+
+`Annotated`
+
+- `@metadata` -- overall information (annotation) about the object
+
+`Vector`
+
+- API: `length()`, `[`, `[[`, ..., `mcols()`
+- `@elementMetadata` -- annotation about each element
+- Example classes
+
+`List`
+
+- list of vector types; `*List` elements are all the same type,
+  e.g., `CharacterList` is like a `list()` of `character()` vectors.
+- Example classes
+
+`GenomicRanges`
+
+- _Virtual_ class defines the 'GRanges' API
+
+`GRanges` -- instantiates `GenomicRanges`; implements 'GRanges' API.
+
+- `@seqnames`
+- `@ranges`
+- `@strand`
+- `@seqinfo`
+
+## *List
+
+- Implementation -- vector + partitioning Consequences: efficient
+  (`unlist()` / `relist()`) vs. inefficient (`endoapply()`)
+  algorithms.
+
+## Exercise
