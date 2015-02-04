@@ -5,7 +5,10 @@
 -->
 
 ```{r setup, echo=FALSE}
-library(UseBioconductor)
+suppressPackageStartupMessages({
+    library(UseBioconductor)
+    library(GenomicRanges)
+})
 stopifnot(BiocInstaller::biocVersion() == "3.1")
 ```
 
@@ -16,8 +19,12 @@ knitr::opts_chunk$set(tidy=FALSE)
 
 # Genomic Ranges
 
-Martin Morgan, Herv&eacute; Pag&egrave;s<br/>
+Herv&eacute; Pag&egrave;s, Martin Morgan<br/>
 February 4, 2015
+
+## A quick introduction to GRanges and GRangesList objects
+
+See [slides](GRanges_and_GRangesList_slides.pdf).
 
 ## Recall: Genomic Ranges
 
@@ -29,49 +36,34 @@ February 4, 2015
 
   ![GRanges](our_figures/GRangesList.png)
 
-Methods (e.g., [Table 2](http://bioconductor.org/help/course-materials/2014/SeattleFeb2014/Ranges.pdf)
+## CompressedList
 
-- intra-range
+- `GRangesList` inherits from `CompressedList`
 
-- inter-range
+  ```{r}
+  library(GenomicRanges)
+  showClass("GRangesList")
+  ```
+  
+- Consequences: `unlist()` and `relist()` are very cheap.
+  The `unlist()` / `relist()` pattern can be used in many situations 
+  where looping over the GRangesList would be inefficient.
 
-- between
+- Example:
 
-## Ranges infrastructure
+  ```{r}
+  library(TxDb.Dmelanogaster.UCSC.dm3.ensGene)
+  txdb <- TxDb.Dmelanogaster.UCSC.dm3.ensGene
+  tx_by_gn <- transcriptsBy(txdb, by="gene")
+  unlisted <- unlist(tx_by_gn)
+  TSS <- ifelse(strand(unlisted) == "+", start(unlisted), end(unlisted))
+  TSS <- GRanges(seqnames(unlisted), IRanges(TSS, width=1), strand(unlisted))
+  TSS_by_gn <- relist(TSS, tx_by_gn)
+  mcols(TSS) <- mcols(unlisted)
+  TSS_by_gn <- relist(TSS, tx_by_gn) 
+  ```
+  
+## Exercises
 
-Class hierarchy: `Annotated` / `Vector` / `List` / `GenomicRanges`
+See HOWTOs vignette in the `r Biocpkg("GenomicRanges")` package.
 
-`Annotated`
-
-- `@metadata` -- overall information (annotation) about the object
-
-`Vector`
-
-- API: `length()`, `[`, `[[`, ..., `mcols()`
-- `@elementMetadata` -- annotation about each element
-- Example classes
-
-`List`
-
-- list of vector types; `*List` elements are all the same type,
-  e.g., `CharacterList` is like a `list()` of `character()` vectors.
-- Example classes
-
-`GenomicRanges`
-
-- _Virtual_ class defines the 'GRanges' API
-
-`GRanges` -- instantiates `GenomicRanges`; implements 'GRanges' API.
-
-- `@seqnames`
-- `@ranges`
-- `@strand`
-- `@seqinfo`
-
-## *List
-
-- Implementation -- vector + partitioning
-- Consequences: efficient (`unlist()` / `relist()`) vs. 
-  inefficient (`endoapply()`) algorithms.
-
-## Exercise

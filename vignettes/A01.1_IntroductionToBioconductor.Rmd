@@ -109,6 +109,20 @@ showMethods("coverage")
 
 ## Infrastructure
 
+Sequences
+
+- `DNAString` / `DNAStringSet`
+
+  ```{r}
+  suppressPackageStartupMessages({
+      library(Biostrings)
+  })
+  data(phiX174Phage)
+  m <- consensusMatrix(phiX174Phage)[1:4,]
+  polymorphic <- colSums(m > 0) > 1
+  endoapply(phiX174Phage, `[`, polymorphic)
+  ```
+  
 Genomic Ranges
 
 - `GRanges`
@@ -119,7 +133,6 @@ Genomic Ranges
 
   ![GRanges](our_figures/GRangesList.png)
 
-
 Integrating sample, range and assay data
 
 - `SummarizedExperiment`
@@ -128,16 +141,16 @@ Integrating sample, range and assay data
 
 ## Key packages
 
-`r Biocpkg("GenomicRanges")` -- Ranges
-
-- Builds on `r Biocpkg("IRanges")`
-- `r Biocpkg("GenomicAlignments")`  -- aligned reads
-- `r Biocpkg("GenomicFeatures")` -- feature-based annotation
-
 `r Biocpkg("Biostirings")` -- Sequences
 
 - `r Biocpkg("BSgenome")` -- Whole-geneome
 - `r Biocpkg("ShortRead")` -- Short read / fastq
+
+`r Biocpkg("GenomicRanges")` -- Ranges
+
+- Builds on `r Biocpkg("IRanges")`; currently includes `SummarizedExperiment`
+- `r Biocpkg("GenomicAlignments")`  -- aligned reads
+- `r Biocpkg("GenomicFeatures")` -- feature-based annotation
 
 `r Biocpkg("BiocParallel")` -- Parallel processing
 
@@ -145,6 +158,8 @@ Integrating sample, range and assay data
   BED, WIG, ...) files
 
 ## Work flows
+
+![SequencingEcosystem](our_figures/SequencingEcosystem.png)
 
 [biocViews](http://bioconductor.org/packages/release/BiocViews.html#___Software)
 for discovery.
@@ -169,6 +184,11 @@ Variants
   `r Biocpkg("ensemblVEP")`, `r Biocpkg("VariantFiltering")`
 
 Copy number
+
+- 45 packages tagged with "CopyNumberVariation" in
+  [biocViews](http://bioconductor.org/packages/devel/BiocViews.html#___CopyNumberVariation); also terms "DNASeq", "ExomeSeq", "WholeGenome"
+- Represent duplicated regions as genomic ranges; integrates very
+  easily in _Bioconductor_ annotation work flows.
 
 Methylation
 

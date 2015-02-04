@@ -51,6 +51,6 @@ Use _R_ / _Bioconductor_
   [annotation resources](A01.5_Annotation.html), including use of data
   base and web service resources
 - 3:45 - 4:45 Genome-specific
-  [visualization and reports](A01.6_Visualization.html), including
+  [visualization and reports](A01.6_Shiny.html), including
   interactivity
 - 4:45 - 5:00 Summary
