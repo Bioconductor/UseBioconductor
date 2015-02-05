@@ -1,0 +1,208 @@
+---
+title: "Class notes"
+author: "Martin Morgan"
+date: "2/4/2015"
+output: html_document
+---
+
+<!--
+%\VignetteIndexEntry{Class notes}
+%\VignettePackage{UseBioconductor}
+%\VignetteEngine{knitr::knitr}
+-->
+
+```{r setup, echo=FALSE}
+library(UseBioconductor)
+stopifnot(BiocInstaller::biocVersion() == "3.1")
+```
+
+```{r style, echo = FALSE, results = 'asis'}
+BiocStyle::markdown()
+```
+
+# Intro
+
+## R
+
+Vectors
+- everything is a vector: `integer()`, `character()`, `numeric()`, `logical()`, `raw()`, `complex()`
+- sometimes called 'atomic'
+
+```{r}
+x = rnorm(1000)
+y = x + rnorm(sd=.5, 1000)
+```
+
+- 'API' (Application Programming Interface) -- how can you work with a vector?
+  - `[` - single bracket subset; 'endomorphism'
+  - `length()`
+  - `c()`
+  - `[<-` -- subset-assign
+  - (`names()`)
+  
+functions: argument names; 
+  - can be optional arguments
+  - named (`sd`; can be partial, e.g., `s=`) -- matched before unnamed
+  - positional -- unnamed are matched by position
+
+  ```{r}
+  rnorms = lapply(0:3, function(mean) {
+     rnorm(1000, mean)
+  })
+  rnorms = lapply(0:3, rnorm, n=1000, mean=0)
+  ```
+- `matrix()`
+  - atomic vectors with 'dim' and 'class' attributes
+  - 'API' -- two- (n-) dimensional `[`, `[<-`
+  ```{r}
+  m = matrix(1:6, 2)
+  dput(m)
+  ```
+`factor()` -- decorated integer() vector
+
+`list()`
+- recurssive data structre
+- heterogeneous elements
+- 'API'
+  - 'inherits' (very loose sense) from vector
+  - `[[`, `$` -- extract element of list
+  - `[[<-`, `$<-` -- assign new element
+  - (`unlist()`)
+  - (assign NULL)
+
+`data.frame()`
+
+- list of vectors, all vectors the same length
+- 'class' attribute
+- inherits 'list' API, and also 'matrix' API
+
+closures
+
+```{r}
+acctFactory = function() {
+  balance <- 0
+  list(deposit=function(amt) {
+    balance <<- balance + amt
+  }, currBalance=function() {
+    balance
+  })
+}
+```
+
+## S3 classes and methods
+
+```{r}
+x = rnorm(1000)
+y = x + rnorm(sd=.5, 1000)
+df = data.frame(X=x, Y=y)
+```
+
+Use of `data.frame()`:
+- groups vectors in a useful way
+- e.g., avoiding bookkeeping errors when subsetting
+- ensures confromance with `data.frame()` 'contract'
+- motivates data structures more elaborate than vector
+
+```{r}
+fit = lm(Y ~ X, df)
+plot(Y ~ X, df)
+abline(fit, lwd=4, col="red")
+anova(fit)
+```
+
+- `fit` is an S3 object (instance, class)
+  - `list()` with a `class` attribute
+  - structure is visible, but irrelevant to the user
+  - `class()` to discover the class(!)
+- `anova` is a generic, with a method appropriate for the class of `fit`
+- discovery: methods("anova"), methods(class="lm")
+- help: `?plot` (for the generic), `?plot.lm` (for the method)
+
+# Bioconductor
+
+## S4
+
+```{r}
+suppressPackageStartupMessages({
+    library(IRanges)
+})
+start <- as.integer(runif(1000, 1, 1e4))
+width <- as.integer(runif(length(start), 50, 100))
+ir <- IRanges(start, width=width)
+coverage(ir)
+```
+
+- S4 is more formal than S3
+  - Specify class structure
+  - Complicated inheritance
+  - Multiple dispatch possible
+
+- discovery
+  - `class(ir)`; could look at (but why bother?) structure using `getClass(class(ir))`
+    - Especiallly useful for inheritance
+  - `showMethods("coverage")`,
+    `showMethods(class=class(ir), where=search())`
+- help
+  - `?coverage` -- help on the generic
+  - `?IRanges` -- Constructor; recent convention: also documents class & important methods
+  - `selectMethod("coverage", signature=class(ir))` to figure out method dispatch, and to see the function definition
+  - `method?"coverage,Ranges"` (tab completion!)
+  - `class?IRanges` (tab completion!)
+
+## Essential classes
+
+Sequences
+
+- `DNAString`, `DNAStringSet`
+
+Ranges
+
+- `GRanges`, `GRangesList`
+
+Integrated containers
+
+- `SummarizedExperiment`
+
+# Working with large data
+
+Brief review of [lecture material](A01.4_LargeData.html)
+
+Efficient `R` code
+
+- R programing sins and corrections, of primary importance is
+  correctness
+- Important to ask how algorithm scales with problem size; many naive
+  approaches scale quadratically (bad!).
+- Complier (`compiler::cmpfun()`) surprisingly effective at improving
+  `f1()` -- better than `sapply()`.
+- Explored `vapply()`. Faster and safer than `sapply()`, so should be
+  a best practice
+- Large gains available from writing effective `R` code; makes appeal
+  to C++ / parallel evaluation less compelling
+
+`r Biocpkg("GenomicFiles")` and `r Biocpkg("BiocParallel")`
+
+- Extended development of `reduceByYield()` to iterate through files
+- Easy to parallelize across files via `bplapply()`.
+- Oops, Rstudio swallows `bplapply()` output. :(
+
+# Annotation
+
+Brief review of [lecture material](A01.5_Annotation.html)
+
+General importance of `select()` interface, including to on-line
+resources such as `r Biocpkg("biomaRt")`
+
+`r Biocpkg("AnnotationHub")`
+
+- _Very_ easy to wrangle web-based genome annotation files, e.g., UCSC
+  chain files
+
+  - Simplified discovery, download, and local management
+  - Easy use in _Bioconductor_ work flows
+  
+- Role of `r Biocpkg("AnnotationHub")` in deploying more complicated
+  and heavily curated resources, like the GRASP2 data base of GWAS
+  variants
+  
+  - `r CRANpkg("dplyr")` makes working with data bases fun.

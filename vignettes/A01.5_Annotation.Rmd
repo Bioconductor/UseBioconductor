@@ -384,7 +384,7 @@ semi_join(tbl(d, "variant"), hispanic)
 ## Data base access (advanced)
 
 - _Bioconductor_ annotation packages are based on _sqlite_ databases.
-- `r CRANpkg("dplry")` provides convenient access via `src_sqlite`,
+- `r CRANpkg("dplyr")` provides convenient access via `src_sqlite`,
   `tbl`, `filter`, `arrange`, `summarize`, etc.
 
 Exercise: use `AnnotationDbi::dbfile()` on a TxDb object `gene` table
