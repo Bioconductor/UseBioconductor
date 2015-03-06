@@ -6,8 +6,8 @@ Fred Hutchinson Cancer Research Center, Seattle, WA<br />
 
 Contact: Martin Morgan ([mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org))
 
-This INTERMEDIATE course is designed for individuals comfortable with
-using _R_, and with at least passing familiarity with
+This **INTERMEDIATE** course is designed for individuals comfortable
+with using _R_, and with at least passing familiarity with
 _Bioconductor_. It consists of approximately equal parts lecture and
 practical sessions addressing use of _Bioconductor_ software for
 analysis and comprehension of high-throughput sequence and related
@@ -29,8 +29,10 @@ Day 1 (9:00 - 12:30; 1:30 - 5:00)
   [GenomicRanges](http://bioconductor.org/packages/devel/bioc/html/GenomicRanges.html)
   package).
 - RNA-Seq known gene differential expression with
-  [DESeq2](http://bioconductor.org/packages/devel/bioc/html/DESeq2.html).
-- Gene set enrichment and other 'down stream' analysis.
+  [DESeq2](http://bioconductor.org/packages/devel/bioc/html/DESeq2.html) and
+  [edgeR](http://bioconductor.org/packages/devel/bioc/html/edgeR.html).
+- Gene set enrichment, machine learning, and other aspects of
+  differential expression.
 
 Day 2 (9:00 - 12:30; 1:30 - 5:00)
 
