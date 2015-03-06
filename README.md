@@ -19,6 +19,11 @@ types, and strategies for working with large data. Participants are
 required to bring a laptop with wireless internet access and a modern
 version of the Chrome or Safari web browser.
 
+Registration
+------------
+
+Please register [online](https://register.bioconductor.org/Seattle-Apr-2015/).
+
 Schedule (tentative)
 --------------------
 
@@ -42,3 +47,4 @@ Day 2 (9:00 - 12:30; 1:30 - 5:00)
 - Integrative data analysis -- emerging approaches
 - Working with large data -- efficient, parallel, and cloud
   programming.
+
