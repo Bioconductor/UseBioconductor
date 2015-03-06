@@ -2,7 +2,7 @@ Use R / Bioconductor for Sequence Analysis
 ==========================================
 
 Fred Hutchinson Cancer Research Center, Seattle, WA<br />
-6-9 April, 2015
+6-7 April, 2015
 
 Contact: Martin Morgan ([mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org))
 
