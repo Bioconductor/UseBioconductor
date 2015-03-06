@@ -4,20 +4,21 @@ Use R / Bioconductor for Sequence Analysis
 Fred Hutchinson Cancer Research Center, Seattle, WA<br />
 6-7 April, 2015
 
-Contact: Martin Morgan ([mtmorgan@fhcrc.org](mailto:mtmorgan@fhcrc.org))
+Contact: Martin Morgan
+([mtmorgan@fredhutch.org](mailto:mtmorgan@fredhutch.org))
 
 This **INTERMEDIATE** course is designed for individuals comfortable
-with using _R_, and with at least passing familiarity with
-_Bioconductor_. It consists of approximately equal parts lecture and
-practical sessions addressing use of _Bioconductor_ software for
-analysis and comprehension of high-throughput sequence and related
-data. Specific topics include use of central Bioconductor classes
-(e.g., _GRanges_, _SummarizedExperiment_), RNASeq gene differential
-expression, ChIP-seq and methylation work flows, approaches to
-management and integrative analysis of diverse high-throughput data
-types, and strategies for working with large data. Participants are
-required to bring a laptop with wireless internet access and a modern
-version of the Chrome or Safari web browser.
+using _R_, and with some familiarity with _Bioconductor_. It consists
+of approximately equal parts lecture and practical sessions addressing
+use of _Bioconductor_ software for analysis and comprehension of
+high-throughput sequence and related data. Specific topics include use
+of central Bioconductor classes (e.g., _GRanges_,
+_SummarizedExperiment_), RNASeq gene differential expression, ChIP-seq
+and methylation work flows, approaches to management and integrative
+analysis of diverse high-throughput data types, and strategies for
+working with large data. Participants are required to bring a laptop
+with wireless internet access and a modern version of the Chrome or
+Safari web browser.
 
 Registration
 ------------
@@ -41,10 +42,14 @@ Day 1 (9:00 - 12:30; 1:30 - 5:00)
 
 Day 2 (9:00 - 12:30; 1:30 - 5:00)
 
-- ChIP-seq and regulatory work flows with the
-  [csaw](http://bioconductor.org/packages/devel/bioc/html/csaw.html) and
+- ChIP-seq and regulatory work flows with
+  [csaw](http://bioconductor.org/packages/devel/bioc/html/csaw.html)
+  and
   [minfi](http://bioconductor.org/packages/devel/bioc/html/minfi.html).
 - Integrative data analysis -- emerging approaches
 - Working with large data -- efficient, parallel, and cloud
-  programming.
+  programming with
+  [BiocParallel](http://bioconductor.org/packages/devel/bioc/html/BiocParallel.html),
+  [GenomicFiles](http://bioconductor.org/packages/devel/bioc/html/GenomicFiles.html),
+  and other resources.
 
