@@ -37,7 +37,7 @@ Day 1 (9:00 - 12:30; 1:30 - 5:00)
 - RNA-Seq known gene differential expression with
   [DESeq2](http://bioconductor.org/packages/devel/bioc/html/DESeq2.html) and
   [edgeR](http://bioconductor.org/packages/devel/bioc/html/edgeR.html).
-- Gene set enrichment, machine learning, and other aspects of
+- Gene set enrichment, machine learning, and other approaches to
   differential expression.
 
 Day 2 (9:00 - 12:30; 1:30 - 5:00)
