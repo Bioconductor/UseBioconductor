@@ -55,6 +55,8 @@ Comparing ranges
 
 # Practical
 
+Sequence Read GC Content
+
 Transcript GC Content
 
 # Deeper understanding
