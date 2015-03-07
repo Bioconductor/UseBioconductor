@@ -1,0 +1,31 @@
+<!--
+%% \VignetteTitle{G. Methylation}
+%% \VignetteEngine{knitr::rmarkdown}
+-->
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+---
+title: G. Methylation
+author: Martin Morgan (mtmorgan@fredhutch.org)
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
+# Motivation
+
+# Work flow & statistical issues
+
+## Methylation microarrays and differentially methylated probesets
+
+## Differential methylated regions
+
+Hunting bumps
+
+Testing significance
+
+# Practical: [minfi](http://bioconductor.org/packages/devel/bioc/html/minfi.html)
+

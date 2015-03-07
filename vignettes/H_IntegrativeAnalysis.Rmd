@@ -1,0 +1,28 @@
+<!--
+%% \VignetteTitle{H. Integrative Analysis}
+%% \VignetteEngine{knitr::rmarkdown}
+-->
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+---
+title: H. Integrative Analysis
+author: Martin Morgan (mtmorgan@fredhutch.org)
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
+# Scope and opportunity
+
+## Case study 1: TCGA Copy Number / Expression
+
+# Accessing 'Consortium' data
+
+# Representing integrated data sets
+
+# Statistical and other challenges
+
+# Practical

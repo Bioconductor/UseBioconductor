@@ -1,0 +1,36 @@
+<!--
+%% \VignetteTitle{I. Large Data}
+%% \VignetteEngine{knitr::rmarkdown}
+-->
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+---
+title: I. Working with Large Data
+author: Martin Morgan (mtmorgan@fredhutch.org)
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
+# Motivation
+
+# Efficient R
+
+# File management with `r Biocpkg("GenomicFiles")`
+
+# Parallel evaluation `r Biocpkg("BiocParallel")`
+
+## Cores
+
+## In-house Clusters
+
+## Clouds
+
+_Ad hoc_ via Amazon Web Services
+
+Google genomics
+
+Others

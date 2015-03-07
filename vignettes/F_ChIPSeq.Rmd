@@ -1,0 +1,30 @@
+<!--
+%% \VignetteTitle{F. ChIP-seq}
+%% \VignetteEngine{knitr::rmarkdown}
+-->
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+---
+title: F. ChIP-seq
+author: Martin Morgan (mtmorgan@fredhutch.org)
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
+# Motivation
+
+# Work flow & statistical issues
+
+## Peak calling
+
+## Differential binding
+
+## Annotation
+
+# Practical: [csaw](http://bioconductor.org/packages/devel/bioc/html/csaw.html)
+
+# Practical Annotation

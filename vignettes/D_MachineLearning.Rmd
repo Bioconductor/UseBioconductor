@@ -1,0 +1,34 @@
+<!--
+%% \VignetteTitle{D. Machine Learning}
+%% \VignetteEngine{knitr::rmarkdown}
+-->
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+---
+title: D. Machine Learning
+author:
+  Martin Morgan (mtmorgan@fredhutch.org)<br />
+  Sonali Arora (sarora@fredhutch.org)
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
+# Machine learning
+
+## Distance
+
+## Unsupervised / clustering
+
+## Supervised / classification
+
+# Common methods in genomics
+
+# Sequence-specific methods
+
+Metagenomics
+
+# Practical

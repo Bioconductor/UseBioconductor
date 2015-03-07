@@ -1,0 +1,52 @@
+<!--
+%% \VignetteTitle{C. Differential Expression}
+%% \VignetteEngine{knitr::rmarkdown}
+-->
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+---
+title: C. Differential Expression
+author: Martin Morgan (mtmorgan@fredhutch.org)
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
+# Overview
+
+## Research questions
+
+## Overall work flow
+
+Experimental design
+
+Statistical approaches
+
+# Experimental and statistical issues in depth
+
+Experimental design
+
+Counting
+
+Normalization
+
+Filtering
+
+Estimation
+
+# Practical 
+
+## Fast path: From BAM to differentially expressed genes
+
+## Data exploration
+
+## Quality metrics
+
+## Specification of experimental design
+
+## Down-stream: preview
+
+# Transcript, single-cell, and other approaches to gene expression

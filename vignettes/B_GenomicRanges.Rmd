@@ -1,0 +1,70 @@
+<!--
+%% \VignetteTitle{B. Genomic Ranges}
+%% \VignetteEngine{knitr::rmarkdown}
+-->
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
+
+---
+title: B. Genomic Ranges
+author: Martin Morgan (mtmorgan@fredhutch.org)
+output:
+  BiocStyle::html_document:
+    toc: true
+---
+
+# Motivation
+
+## Use cases
+
+## `GRanges`
+
+## `GRangesList`
+
+# Range-based operations
+
+Accessors
+
+Intra-range operations
+
+Inter-range operations
+
+Comparing ranges
+
+# Practical: five easy pieces
+
+# Working with _Bioconductor_ classes and methods
+
+## Construction and use
+
+## Help!
+
+# Other important objects
+
+## `SummarizedExperiment`
+
+## `TxDb`
+
+`transcripts()` interface
+
+`select()` interface
+
+## `DNAStringSet`
+
+# Practical
+
+Transcript GC Content
+
+# Deeper understanding
+
+## Class hierarchy
+
+## `Vector` and `Annotated`
+
+## `List`-like
+
+Implementation: `Vector` plus partitioning
+
+- Consequence: `unlist()` and `relist()` are very inexpensive

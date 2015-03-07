@@ -15,6 +15,7 @@ Description: This course is directed at intermediate users wanting to
     combines lectures with extensive hands-on practicals; participants
     are required to bring a laptop with wireless internet access and a
     modern version of the Chrome or Safari web browser.
+Imports: devtools
 Suggests: knitr, BiocStyle, BiocInstaller, ALL,
     BSgenome.Hsapiens.UCSC.hg19, BiocParallel, Biostrings,
     GenomicAlignments, GenomicFeatures, Gviz, MLSeq, PoiClaClu,
