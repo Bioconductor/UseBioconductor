@@ -27,15 +27,15 @@ Statistical approaches
 
 # Experimental and statistical issues in depth
 
-Experimental design
+## Experimental design
 
-Counting
+## Counting
 
-Normalization
+## Normalization
 
-Filtering
+## Filtering
 
-Estimation
+## Estimation
 
 # Practical 
 
@@ -46,6 +46,14 @@ Estimation
 ## Quality metrics
 
 ## Specification of experimental design
+
+Common experimental designs
+
+- t-test
+- paired designs
+- Single factor, multiple levels (one-way ANOVA)
+- Factorial designs
+- Simple time series
 
 ## Down-stream: preview
 
