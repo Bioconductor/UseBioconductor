@@ -29,6 +29,8 @@ Statistical approaches
 
 ## Experimental design
 
+## Batch effects
+
 ## Counting
 
 ## Normalization
@@ -37,6 +39,17 @@ Statistical approaches
 
 ## Estimation
 
+# Experimental design in R
+
+Common experimental designs
+
+- t-test
+- paired designs
+- Single factor, multiple levels (one-way ANOVA) -- statistical
+  contrasts
+- Factorial designs -- main effects; interactions
+- Simple time series
+
 # Practical 
 
 ## Fast path: From BAM to differentially expressed genes
@@ -44,16 +57,6 @@ Statistical approaches
 ## Data exploration
 
 ## Quality metrics
-
-## Specification of experimental design
-
-Common experimental designs
-
-- t-test
-- paired designs
-- Single factor, multiple levels (one-way ANOVA)
-- Factorial designs
-- Simple time series
 
 ## Down-stream: preview
 

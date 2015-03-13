@@ -22,3 +22,12 @@ output:
 # Sequence-related issues
 
 # Implementation
+
+## What is a gene set?
+
+R representation
+
+- `data.frame()` of set name / gene name pairs
+- Named `list()`, where names of the list are sets, and each element
+  of the list is a vector of genes in the set.
+- `r Biocpkg("GSEABase")`
