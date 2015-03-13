@@ -23,6 +23,39 @@ output:
 
 # Representing integrated data sets
 
+## Key components
+
+Samples
+
+- Including 'phenotypic' attributes measured on each
+
+Assays
+
+- Often, rectangular features x samples `matrix()` of values
+- A different representation: `data.frame()` of feature, sample, value
+  tuples.
+
+Experiments
+
+- Sample inputs to each experiment
+- Assay outputs from each experiment
+- Additional experiment-specific information, each date on which
+  samples were processed
+  
+## Alternative Representations
+
+R-based representations
+
+Other approaches
+
+- Data base
+- 'Scientific' representations, e.g.,
+  [HDF5](http://www.hdfgroup.org/HDF5/)
+- 'Computational' representations, e.g.,
+  [HDFS](http://hadoop.apache.org/docs/r1.2.1/hdfs_design.html)
+
+## A preliminary design
+
 # Statistical and other challenges
 
 # Practical
