@@ -30,20 +30,24 @@ Statistical approaches
 ## Experimental design
 
 Samples
+
 - Unique identifier
 - Factor(s) describing assignment of sample to treatment group(s)
 - Covariates
 
 Features
+
 - Unique identifier. Sequence-based assays: often _genomic ranges_
 - Additional annotations relevant to comprehension
 
 Measurement
+
 - Typically: _univariate_ measures
 - Unique statistical properties from techincal aspects of experiment
 - Shared experimental design across features
 
 Principles
+
 - Replication
 - Simplicity
 - Covariates
@@ -53,11 +57,13 @@ Principles
 ## Batch effects
 
 Known
+
 - Phenotypic covariates, e.g., age, gender
 - Experimental covariates, e.g., lab or date of processing
 - Incorporate into linear model, at least approximately
 
 Unknown
+
 - Or just unexpected / undetected
 - Characterize using, e.g., `r Biocpkg("sva")`.
 
@@ -74,6 +80,7 @@ Unknown
 ## Example: t-test
 
 `t.test()`
+
 - `x`: vector of univariate measurements
 - `y`: `factor` describing experimental design
 - `var.equal=TRUE`: appropriate for relatively small experiments where
@@ -81,26 +88,31 @@ Unknown
 - `formula`: alternative representation, `y ~ x`.
 
 `lm()` and `anova()`
+
 - `lm()`: fit _linear model_.
-- `formula`
-  - Translated into _model matrix_.
-  - Used in `lm.fit()`.
+- `formula`: translated into _model matrix_, used in `lm.fit()`.
 - `anova()`: statisitcal evaluation.
 
 `genefilter::rowttests()`
+
 - t-tests for gene expression data
 - useful for exploratory analysis, but statistically sub-optimal
 - `x`: matrix of expression values
-  - features x samples (reverse of how a 'statistician' would
-    represent the data -- samples x features)
+- features x samples (reverse of how a 'statistician' would
+  represent the data -- samples x features)
+
 - `fac`: factor of one or two levels describing experimental design
-- Limitations
-  - Assumes features are _independent_
-  - Ignores common experimental design
-  - Ignores multiple testing
-- Consequences
-  - Poor estimate of between-group variance for each feature
-  - Elevated false discovery rate
+
+Limitations
+
+- Assumes features are _independent_
+- Ignores common experimental design
+- Ignores multiple testing
+
+Consequences
+
+- Poor estimate of between-group variance for each feature
+- Elevated false discovery rate
 
 ## Common experimental designs
 
