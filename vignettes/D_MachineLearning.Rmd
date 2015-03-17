@@ -19,11 +19,59 @@ output:
 
 # Machine learning
 
+## Data
+
 ## Distance
 
 ## Unsupervised / clustering
 
 ## Supervised / classification
+
+# Machine learning in R
+
+## Clustering
+
+e.g., `cmdscale()`
+
+- Classical multi-dimensional scaling
+- `d`: distance matrix
+
+Example (quick-and-dirty)
+
+- Prepare some plain-old _R_ objects, for illustration
+  - `airway` data set from `r Biocpkg(DESeq2)`
+  - Filter (remove) genes with low counts (arbitrary at this point)
+  - `limma::voom()` to arrive at approximately normal expression values
+    (visualize with `hist(voom(assay(airway1))$E)`)
+  - `m` is a simple `matrix', `df` a `data.frame`
+
+```{r airway1-voom}
+suppressPackageStartupMessages({
+   library(limma)
+   library(DESeq2)
+   library(airway)
+})
+data(airway)
+m0 <- assay(airway)
+m0 <- m0[rowSums(m0 > 5) > 4,]
+m <- voom(m0)$E
+df <- as.data.frame(colData(airway))
+```
+
+- `dist()`: Euclidean distance: (transpose `m`, so 'samples' are rows)
+- `cmdscale(d)` returns a matrix; `plot()` displays it.
+- `airway1$dex`: treated / untreated; `airway1$cell`: cell line.
+
+```{r cmdscale-plot}
+d <- dist(t(m), "euclidean")
+plot(cmdscale(d), col=as.integer(airway1$dex),
+     pch=as.integer(airway1$cell))
+```
+
+- Strong treatment effect, but also cell line effect. Suggests:
+  incorporate cell line as covariate.
+
+## Classification
 
 # Common methods in genomics
 
@@ -34,3 +82,25 @@ Metagenomics
 Edit distance
 
 # Practical
+
+
+## Clustering: `limma::plotMDS()`
+
+- Input: matrix of log-fold expression values.
+- Special feature: distances on plot proportional to log2-fold change.
+- plot created, but also object (with distance matrix) returned.
+
+Example (quick-and-dirty)
+
+```{r plotMDS}
+suppressPackageStartupMessages({
+   library(limma)
+   library(DESeq2)
+   library(airway)
+})
+data(airway)
+airway1 <- airway[rowSums(assay(airway) > 5) > 4,]
+m <- voom(assay(airway1))$E
+plotMDS(m, col=as.integer(airway1$dex),
+        pch=as.integer(airway1$cell))
+```

@@ -52,6 +52,15 @@ Principles
 
 ## Batch effects
 
+Known
+- Phenotypic covariates, e.g., age, gender
+- Experimental covariates, e.g., lab or date of processing
+- Incorporate into linear model, at least approximately
+
+Unknown
+- Or just unexpected / undetected
+- Characterize using, e.g., `r Biocpkg("sva")`.
+
 ## Counting
 
 ## Normalization
@@ -60,7 +69,7 @@ Principles
 
 ## Estimation
 
-# Analysis of Designed Experiments in R
+# Analysis of designed experiments in R
 
 ## Example: t-test
 
