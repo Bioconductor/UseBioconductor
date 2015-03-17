@@ -29,21 +29,13 @@ output:
 
 # Machine learning in R
 
-## Clustering
+Prepare some plain-old _R_ objects, for illustration
 
-e.g., `cmdscale()`
-
-- Classical multi-dimensional scaling
-- `d`: distance matrix
-
-Example (quick-and-dirty)
-
-- Prepare some plain-old _R_ objects, for illustration
-  - `airway` data set from `r Biocpkg(DESeq2)`
-  - Filter (remove) genes with low counts (arbitrary at this point)
-  - `limma::voom()` to arrive at approximately normal expression values
-    (visualize with `hist(voom(assay(airway1))$E)`)
-  - `m` is a simple `matrix', `df` a `data.frame`
+- `airway` data set from `r Biocpkg(DESeq2)`
+- Filter (remove) genes with low counts (arbitrary at this point)
+- `limma::voom()` to arrive at approximately normal expression values
+  (visualize with `hist(voom(assay(airway1))$E)`)
+- `m` is a simple `matrix', `df` a `data.frame`
 
 ```{r airway1-voom}
 suppressPackageStartupMessages({
@@ -57,6 +49,15 @@ m0 <- m0[rowSums(m0 > 5) > 4,]
 m <- voom(m0)$E
 df <- as.data.frame(colData(airway))
 ```
+
+## Clustering
+
+e.g., `cmdscale()`
+
+- Classical multi-dimensional scaling
+- `d`: distance matrix
+
+Example (quick-and-dirty)
 
 - `dist()`: Euclidean distance: (transpose `m`, so 'samples' are rows)
 - `cmdscale(d)` returns a matrix; `plot()` displays it.
