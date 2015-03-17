@@ -31,10 +31,10 @@ output:
 
 Prepare some plain-old _R_ objects, for illustration
 
-- `airway` data set from `r Biocpkg(DESeq2)`
+- `airway` data set from `r Biocpkg("DESeq2")`
 - Filter (remove) genes with low counts (arbitrary at this point)
 - `limma::voom()` to arrive at approximately normal expression values
-  (visualize with `hist(voom(assay(airway1))$E)`)
+  (visualize with `hist(m)`)
 - `m` is a simple `matrix', `df` a `data.frame`
 
 ```{r airway1-voom}
@@ -65,8 +65,7 @@ Example (quick-and-dirty)
 
 ```{r cmdscale-plot}
 d <- dist(t(m), "euclidean")
-plot(cmdscale(d), col=as.integer(airway1$dex),
-     pch=as.integer(airway1$cell))
+plot(cmdscale(d), col=as.integer(df$dex), pch=as.integer(df$cell))
 ```
 
 - Strong treatment effect, but also cell line effect. Suggests:
