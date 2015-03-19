@@ -15,15 +15,78 @@ output:
     toc: true
 ---
 
-# Motivation
+# Motivation: differential binding
+
+Key references
+
+- Kharchenko, Tolstorukov, and Park
+  ([2008](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2597701/)).
+- Lun and Smyth ([2014](http://dx.doi.org/10.1093/nar/gku351)).
 
 # Work flow & statistical issues
 
+## ChIP-seq
+
+  
+
+Kharchenko et
+al. ([2008](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2597701/)).
+![ChIP-seq Overview](our_figures/ChIPSeq_nbt-1508-F1.jpg)
+
+- Tags versus sequenced reads; single-end read extension in 3'
+  direction
+- Defined (narrow, e.g., transcription factor binding sites) versus
+  diffuse (e.g., histone marks) peaks
+- Strand cross-correlation
+
+ChIP-seq for differential binding
+
+- Designed experiment with replicate samples per treatment
+- Analysis using insights from microarrays / RNA-seq
+
+Novel statistical issues
+
+- Inferring peaks without 'data snooping' (using the same data twice,
+  once to infer peaks, once to estimate differential binding)
+- Retaining power
+- Minimizing false discovery rate
+
 ## Peak calling
 
-## Differential binding
+'Known' ranges
 
-## Annotation
+- Count tags in pre-defined ranges, e.g., promoter regions of known
+  genes
+- Obvious limitations, e.g., regulatory elements not in specified
+  ranges; specified range contains multiple regulatory elements with
+  complementary behavior
+
+_de novo_ windows
+
+- Width: narrow peaks, 1bp; broad peaks, 150bp
+- Offset: 25-100bp; influencing computational burden
+
+_de novo_ peak calling
+
+- Third-party software (many available;
+  [MACS](http://liulab.dfci.harvard.edu/MACS/) commonly used)
+- Various strategies for calling peaks -- Lun & Smyth, Table 1
+
+    - Call each sample independently; intersection or union of peaks
+      across samples
+    - Call peaks from a pooled library
+    - ...
+
+- How to choose? -- Lun & Smyth, Table 1
+
+    - Under the null hypothesis, type I error rate is uniform
+    - Best strategy: call peaks from a pooled library
+
+_de novo_ hybrid strategies
+
+## Differential binding (`r Biocpkg("csaw")`)
+
+## Annotation (`r Biocpkg("ChIPseeker")`)
 
 # Practical: [csaw](http://bioconductor.org/packages/devel/bioc/html/csaw.html)
 

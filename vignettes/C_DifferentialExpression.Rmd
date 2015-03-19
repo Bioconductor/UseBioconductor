@@ -71,6 +71,8 @@ Unknown
 
 ## Normalization
 
+TMM (`r Biocpkg("edgeR")`)
+
 ## Filtering
 
 ## Estimation
