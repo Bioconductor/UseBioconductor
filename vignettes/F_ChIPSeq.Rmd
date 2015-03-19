@@ -15,6 +15,13 @@ output:
     toc: true
 ---
 
+```{r setup, echo=FALSE}
+options(digits=3)
+suppressPackageStartupMessages({
+    requireNamespace("genefilter", quietly=TRUE)
+})
+```
+
 # Motivation: differential binding
 
 Key references
@@ -27,17 +34,15 @@ Key references
 
 ## ChIP-seq
 
-  
-
 Kharchenko et
 al. ([2008](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2597701/)).
 ![ChIP-seq Overview](our_figures/ChIPSeq_nbt-1508-F1.jpg)
 
 - Tags versus sequenced reads; single-end read extension in 3'
   direction
+- Strand shift / cross-correlation
 - Defined (narrow, e.g., transcription factor binding sites) versus
   diffuse (e.g., histone marks) peaks
-- Strand cross-correlation
 
 ChIP-seq for differential binding
 
@@ -73,7 +78,7 @@ _de novo_ peak calling
 - Various strategies for calling peaks -- Lun & Smyth, Table 1
 
     - Call each sample independently; intersection or union of peaks
-      across samples
+      across samples, ...
     - Call peaks from a pooled library
     - ...
 
@@ -81,6 +86,14 @@ _de novo_ peak calling
 
     - Under the null hypothesis, type I error rate is uniform
     - Best strategy: call peaks from a pooled library
+
+```{r null-p}
+## 100,000 t-tests under the null, n = 6
+n <- 6; m <- matrix(rnorm(n * 100000), ncol=n)
+P <- genefilter::rowttests(m, factor(rep(1:2, each=3)))$p.value
+quantile(P, c(.001, .01, .05))
+hist(P, breaks=20)
+```
 
 _de novo_ hybrid strategies
 
