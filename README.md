@@ -30,6 +30,8 @@ Schedule (tentative)
 
 Day 1 (9:00 - 12:30; 1:30 - 5:00)
 
+- [A. Introduction](vignettes/A_Introduction.Rmd). _Bioconductor_ and
+  sequencing work flows
 - [B. Genomic Ranges](vignettes/B_GenomicRanges.Rmd). Working with Genomic
   Ranges and other _Bioconductor_ data structures (e.g., in the
   [GenomicRanges](http://bioconductor.org/packages/devel/bioc/html/GenomicRanges.html).
