@@ -17,90 +17,231 @@ output:
     toc: true
 ---
 
-# Machine learning
+## Contents
 
-## Data
+* [Introduction to Machine Learning](#intro) 
+* [Datasets](#data)
+* [Unsupervised Learning](#unsup)
+* [Supervised Learning](#sup)
 
-## Distance
 
-## Unsupervised / clustering
+## Introduction to Machine Learning 
 
-## Supervised / classification
+Lets say that we are interested in predicting the run time of an athlete 
+depending on his shoe size, height and weight in a study of 100 people.
+We can do so using a simple linear regression model where 
 
-# Machine learning in R
-
-Prepare some plain-old _R_ objects, for illustration
-
-- `airway` data set from `r Biocpkg("DESeq2")`
-- Filter (remove) genes with low counts (arbitrary at this point)
-- `limma::voom()` to arrive at approximately normal expression values
-  (visualize with `hist(m)`)
-- `m` is a simple `matrix', `df` a `data.frame`
-
-```{r airway1-voom}
-suppressPackageStartupMessages({
-   library(limma)
-   library(DESeq2)
-   library(airway)
-})
-data(airway)
-m0 <- assay(airway)
-m0 <- m0[rowSums(m0 > 5) > 4,]
-m <- voom(m0)$E
-df <- as.data.frame(colData(airway))
+```{r}
+y = beta0 + beta1 * height + beta2 * weight + beta3 * shoe size
 ```
 
-## Clustering
+Here y is the response variable (run time), n is the number of observations 
+(100 people), p is the number of variables/ features/ predictors (3 IE height, 
+weight, shoe size), X is a nxp matrix
 
-e.g., `cmdscale()`
+This data set is a low dimensional data where n >>p but most of the biological 
+data sets coming out of modern biological techniques are high dimensional IE 
+n << p This poses statistical challenge and simple linear regression can no 
+longer help us.
 
-- Classical multi-dimensional scaling
-- `d`: distance matrix
+For example, 
 
-Example (quick-and-dirty)
+* Identify the risk factors(genes) for prostrate cancer based on gene
+  expression data
+* Predict the chances of breast cancer survival in a patient. 
+* Identify patterns of gene expression among different sub types of
+  breast cancer
 
-- `dist()`: Euclidean distance: (transpose `m`, so 'samples' are rows)
-- `cmdscale(d)` returns a matrix; `plot()` displays it.
-- `airway1$dex`: treated / untreated; `airway1$cell`: cell line.
+In all of the 3 examples, listed above n, no of observations, is 30-40 patients
+whereas p, no of features, is approximately 30,000 genes. Try writing a linear 
+regression formula for the outcome variable, y, in any of the above three 
+scenarios.. 
 
-```{r cmdscale-plot}
-d <- dist(t(m), "euclidean")
-plot(cmdscale(d), col=as.integer(df$dex), pch=as.integer(df$cell))
+Listed below are things that can go wrong with high dimensional data
+- some of these predictors are useful, some are not 
+- if we include too many predictors, we can over fit the data 
+
+This is why we need Machine Learning. Lets first introduce some basic concepts 
+and then dive into examples and a lab session. 
+
+**Supervised Learning** - Use a data set X to predict the association with a 
+response variable Y. The response variable can be continuous or categorical. 
+For example: Predict the chances of breast cancer survival in a patient.
+
+**Unsupervised Learning** - Discover the associations or patterns in X. No 
+response variable is present. For example: Cluster similar genes into groups. 
+
+**Training & Test Datasets** -  Usually we split observation into test and 
+training data sets. We fit the model on the training data set and evaluate on the 
+test data set. The test set error rate is an estimate of the models performance 
+on future data sets. 
+
+**Model Selection** - We usually consider numerous models for a given problem. 
+For example, we are trying to identify the genes responsible for a given 
+disease using gene expression data set- we could have the following models
+a) model1 - all 30000 genes the array gives us 
+b) we include genes related to the pathway that we know is upregulated in 
+that disease
+c) genes found in literature which are known to influence this disease 
+So how do we pick the best model which can be tested on the test data set? 
+We can use different approaches here: validation set, leave one out 
+cross-validation, k-fold cross validation 
+
+Briefly, the *validation set approach* deals with diving the full data sets into 
+3 groups - training set, validation set and the test set. We train the models on 
+the training set, evaluate their performance on the validation set and then the
+best model is chosen to fit on the test set. 
+
+The *leave one out cross validation* starts with fitting n models ( where n is
+number of observations in the training data set), each on n-1 observations, 
+evaluating each model on the left-out observation. The best model is the one 
+for which the total test error is the smallest and that is then used to predict 
+the test set. 
+
+Lastly the *5 fold cross validation* (here k=5), is splitting the training 
+data set into 5 sets and repeatedly training the model on the other 4 sets and 
+evaluating the performance on the fifth.
+
+**Bias, Variance, Overfitting** - Bias refers to the average difference between
+the actual betas and the predicted betas, Variance refers to the amount by 
+which the betas differ across experiments. As the model complexity(no of 
+variables) increases, the bias decreases and the variance increases. This is 
+know as the Bias-Variance Tradeoff and a model that has too much of variance, 
+is said to be over fit. 
+
+## Datasets
+
+For **Unsupervised learning**, we will use RNA-Seq count data from the
+Biocoductor package, `r Biocpkg("airway")`. From the abstract, a brief 
+description of the RNA-Seq experiment on airway smooth muscle (ASM) cell 
+lines: “Using RNA-Seq, a high-throughput sequencing method, we characterized 
+transcriptomic changes in four primary human ASM cell lines that were treated 
+with dexamethasone - a potent synthetic glucocorticoid (1 micromolar for 
+18 hours).”
+
+For **Supervised learning**, we will use cervical count data from the
+Biocoductor package, `r Biocpkg("MLSeq")`. This data set contains
+expressions of 714 miRNA's of human samples. There are 29 tumor and 29
+non-tumor cervical samples. For learning purposes, we can treat these
+as two separate groups and run various classification algorithms.
+
+```{r message=FALSE}
+library(MLSeq)
+filepath = system.file("extdata/cervical.txt", package = "MLSeq")
+cervical = read.table(filepath, header = TRUE)
 ```
 
-- Strong treatment effect, but also cell line effect. Suggests:
-  incorporate cell line as covariate.
 
-## Classification
+## Unsupervised Learning 
 
-# Common methods in genomics
+Unsupervised Learning is a set of statistical tools intended for the setting
+in which we have only a set of features $X_1$, $X_2$, ....,$X_p$ measured 
+on 'n' observations. We are primarily interested in discovering interesting 
+things on the measurement $X_1$, $X_2$, ....,$X_p$
 
-# Sequence-specific methods
+Unsupervised Learning is often performed as a part of Exploratory Data Analysis. 
+These tools help us to get a good idea about the data set. Unlike a supervised
+learning problem, where we can use prediction to gain some confidence about our
+learning algorithm, there is no way to check our model. The learning algorithm
+is thus, aptly named "unsupervised".
 
-Metagenomics
+## Supervised Learning 
 
-Edit distance
+In supervised learning, along with the features $X_1$, $X_2$, ....,$X_p$, we 
+also have the a response Y measured on the same n observations. The goal is then
+to predict Y using $X_1$, $X_2$, ....,$X_p$ for new observations.
 
-# Practical
+For the cervical data, we know that the first 29 are non-Tumor samples 
+whereas the last 29 are Tumor samples. We will code these as 0 and 1 
+respectively.  We will randomly sample 30% of our data and use that as a 
+test set. The remaining 70% of the data will be used as training data
 
+```{r }
+set.seed(9)
 
-## Clustering: `limma::plotMDS()`
+class = data.frame(condition = factor(rep(c(0, 1), c(29, 29))))
 
-- Input: matrix of log-fold expression values.
-- Special feature: distances on plot proportional to log2-fold change.
-- plot created, but also object (with distance matrix) returned.
+nTest = ceiling(ncol(cervical) * 0.2)
+ind = sample(ncol(cervical), nTest, FALSE)
 
-Example (quick-and-dirty)
+cervical.train = cervical[, -ind]
+cervical.train = as.matrix(cervical.train + 1)
+classtr = data.frame(condition = class[-ind, ])
 
-```{r plotMDS}
-suppressPackageStartupMessages({
-   library(limma)
-   library(DESeq2)
-   library(airway)
-})
-data(airway)
-airway1 <- airway[rowSums(assay(airway) > 5) > 4,]
-m <- voom(assay(airway1))$E
-plotMDS(m, col=as.integer(airway1$dex),
-        pch=as.integer(airway1$cell))
+cervical.test = cervical[, ind]
+cervical.test = as.matrix(cervical.test + 1)
+classts = data.frame(condition = class[ind, ])
 ```
+
+MLSeq aims to make computation less complicated for a user and
+allows one to learn a model using various classifier's with one single function. 
+
+The main function of this package is classify which requires data in the form of 
+a DESeqDataSet instance. The DESeqDataSet is a subclass of SummarizedExperiment,
+used to store the input values, intermediate calculations and results of an 
+analysis of differential expression.
+
+So lets create DESeqDataSet object for both the training and test set, and run 
+DESeq on it. 
+
+```{r}
+cervical.trainS4 = DESeqDataSetFromMatrix(countData = cervical.train, 
+        colData = classtr, formula(~condition))
+cervical.trainS4 = DESeq(cervical.trainS4, fitType = "local")
+
+cervical.testS4 = DESeqDataSetFromMatrix(countData = cervical.test, colData = classts,
+formula(~condition))
+cervical.testS4 = DESeq(cervical.testS4, fitType = "local")
+
+```
+Classify using Support Vector Machines. 
+
+```{r}
+svm = classify(data = cervical.trainS4, method = "svm", normalize = "deseq",
+deseqTransform = "vst", cv = 5, rpt = 3, ref = "1")
+svm
+```
+
+It returns an object of class 'MLseq' and we observe that it successfully
+fitted a model with 97.8% accuracy. We can access the slots of this S4 object by
+```{r}
+getSlots("MLSeq")
+```
+And also, ask about the model trained. 
+
+```{r}
+trained(svm)
+```
+
+We can predict the class labels of our test data using "predict"
+
+```{r}
+pred.svm = predictClassify(svm, cervical.testS4)
+table(pred.svm, relevel(cervical.testS4$condition, 2))
+```
+
+The other classification methods available are 'randomforest', 'cart' and 
+'bagsvm'.
+
+### Exercise:
+
+Train the same training data and test data using randomForest.
+
+**Solutions:**
+
+```{r}
+rf = classify(data = cervical.trainS4, method = "randomforest", 
+        normalize = "deseq", deseqTransform = "vst", cv = 5, rpt = 3, ref = "1")
+trained(rf)
+pred.rf = predictClassify(rf, cervical.testS4)
+table(pred.rf, relevel(cervical.testS4$condition, 2))
+```
+
+## SessionInfo
+
+```{r}
+sessionInfo()
+```
+
+
+
