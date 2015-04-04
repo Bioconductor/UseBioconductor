@@ -1,18 +1,18 @@
-<!--
-%% \VignetteTitle{A. Introduction}
-%% \VignetteEngine{knitr::rmarkdown}
--->
-
-```{r style, echo=FALSE, results='asis'}
-BiocStyle::markdown()
-```
-
 ---
 title: "A. Introduction: Use R / Bioconductor for Sequence Analysis"
 author: Martin Morgan (mtmorgan@fredhutch.org)
 output:
-  BiocStyle::html_document
+  BiocStyle::html_document:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{A. Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
 
 # Introduction
 
@@ -59,9 +59,34 @@ Day 2 (9:00 - 12:30; 1:30 - 5:00)
   [GenomicFiles](http://bioconductor.org/packages/devel/bioc/html/GenomicFiles.html),
   and other resources.
 
-# Utilities
+# Bioconductor
 
-```{r utilities, eval=FALSE}
-gist <- "https://gist.github.com/mtmorgan/9f98871adb9f0c1891a4"
-devtools::source_gist(gist)
-```
+Analysis and comprehension of high throughput genomic data
+
+- Sequencing, microarrays, proteomics, flow cytometry, imaging, ...
+- Recent publication: Huber et al., Orchestrating high-throughput
+  genomic analysis with Bioconductor. Nature Methods
+  12:[115-121](http://www.nature.com/nmeth/journal/v12/n2/abs/nmeth.3252.html)
+
+Packages
+
+- Software
+- Annotation -- static, versioned annotations, e.g., genome sequences,
+  gene models, gene identifiers
+- Experiment data -- example experiments used to illustrate work
+  flows and analysis
+- Recently: `r Biocpkg("AnnotationHub")` for easy web-based retrieval
+  of genome-scale annotation
+
+# Sequencing work flows & ecosystem
+
+0. Research question
+1. Experimental Design
+2. Wet lab
+3. Sequencing
+4. Alignment
+5. _Reduction_
+6. _Analysis_
+7. _Comprehension_ (annotation, integration, visualization)
+
+![](our_figures/SequencingEcosystem.png)

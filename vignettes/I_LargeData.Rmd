@@ -1,25 +1,65 @@
-<!--
-%% \VignetteTitle{I. Large Data}
-%% \VignetteEngine{knitr::rmarkdown}
--->
-
-```{r style, echo=FALSE, results='asis'}
-BiocStyle::markdown()
-```
-
----
+        ---
 title: I. Working with Large Data
 author: Martin Morgan (mtmorgan@fredhutch.org)
 output:
   BiocStyle::html_document:
     toc: true
+vignette: >
+  %\VignetteIndexEntry{I. Working with Large Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
 
 # Motivation
 
 # Efficient R
 
 # File management with `r Biocpkg("GenomicFiles")`
+
+## File classes
+
+| Type  | Example use           | Name                        | Package                          |
+|-------|-----------------------|-----------------------------|----------------------------------|
+| .bed  | Range annotations     | `BedFile()`                 | `r Biocpkg("rtracklayer")`       |
+| .wig  | Coverage              | `WigFile()`, `BigWigFile()` | `r Biocpkg("rtracklayer")`       |
+| .gtf  | Transcript models     | `GTFFile()`                 | `r Biocpkg("rtracklayer")`       |
+| .2bit | Genomic Sequence      | `TwoBitFile()`              | `r Biocpkg("rtracklayer")`       |
+| .fastq | Reads & qualities    | `FastqFile()`               | `r Biocpkg("ShortRead")`         |
+| .bam  | Aligned reads         | `BamFile()`                 | `r Biocpkg("Rsamtools")`         |
+| .tbx  | Indexed tab-delimited | `TabixFile()`               | `r Biocpkg("Rsamtools")`         |
+| .vcf  | Variant calls         | `VcfFile()`                 | `r Biocpkg("VariantAnnotation")` |
+
+```{r rtracklayer-file-classes}
+## rtracklayer menagerie
+names(getClass("RTLFile")@subclasses)
+```
+
+Notes
+
+- Not a consistent interface
+- `open()`, `close()`, `import()` / `yield()` / `read*()`
+- Some: selective import via index (e.g., `.bai`, bam index);
+  selection ('columns'); restriction ('rows')
+
+## Managing a collection of files
+
+`*FileList()` classes
+
+- `reduceByYield()` -- iterate through a single large file
+- `bplappyl()` (`r Biocpkg("BiocParallel")`) -- perform independent
+  operations on several files, in parallel
+
+`GenomicFiles()`
+
+- 'rows' as genomic range restrictions, 'columns' as files
+- Each row x column is a _map_ from file data to useful representation
+  in _R_
+- `reduceByRange()`, `reduceByFile()`: collapse maps into summary
+  representation
 
 # Parallel evaluation `r Biocpkg("BiocParallel")`
 

@@ -1,19 +1,18 @@
-<!--
-%% \VignetteTitle{G. Methylation}
-%% \VignetteEngine{knitr::rmarkdown}
--->
-
-```{r style, echo=FALSE, results='asis'}
-BiocStyle::markdown()
-```
-
 ---
 title: G. Methylation
 author: Martin Morgan (mtmorgan@fredhutch.org)
 output:
   BiocStyle::html_document:
     toc: true
+vignette: >
+  %\VignetteIndexEntry{G. Methylation}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
 
 # Motivation
 

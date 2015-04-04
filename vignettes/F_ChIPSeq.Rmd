@@ -1,21 +1,23 @@
-<!--
-%% \VignetteTitle{F. ChIP-seq}
-%% \VignetteEngine{knitr::rmarkdown}
--->
+---
+title: F. ChIP-seq
+author: Martin Morgan (mtmorgan@fredhutch.org)
+date: "`r Sys.Date()`"
+output:
+  BiocStyle::html_document:
+    markdown_strict: true
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{F. ChIP-seq}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
 
 ```{r style, echo=FALSE, results='asis'}
 BiocStyle::markdown()
 ```
 
----
-title: F. ChIP-seq
-author: Martin Morgan (mtmorgan@fredhutch.org)
-output:
-  BiocStyle::html_document:
-    toc: true
----
 
-```{r setup, echo=FALSE}
+```{r setup, echo=FALSE, cache=TRUE}
 options(digits=3)
 suppressPackageStartupMessages({
     requireNamespace("genefilter", quietly=TRUE)
@@ -75,19 +77,22 @@ _de novo_ peak calling
 
 - Third-party software (many available;
   [MACS](http://liulab.dfci.harvard.edu/MACS/) commonly used)
-- Various strategies for calling peaks -- Lun & Smyth, Table 1
+- Various strategies for calling peaks -- Lun & Smyth,
+  [Table 1](http://nar.oxfordjournals.org/content/42/11/e95/T1.expansion.html)
 
     - Call each sample independently; intersection or union of peaks
       across samples, ...
     - Call peaks from a pooled library
     - ...
 
-- How to choose? -- Lun & Smyth, Table 1
-
+- How to choose? -- Lun & Smyth,
+  
     - Under the null hypothesis, type I error rate is uniform
+    - [Table 2](http://nar.oxfordjournals.org/content/42/11/e95/T2.expansion.html):
+      consequences for type I error
     - Best strategy: call peaks from a pooled library
 
-```{r null-p}
+```{r null-p, cache=TRUE}
 ## 100,000 t-tests under the null, n = 6
 n <- 6; m <- matrix(rnorm(n * 100000), ncol=n)
 P <- genefilter::rowttests(m, factor(rep(1:2, each=3)))$p.value

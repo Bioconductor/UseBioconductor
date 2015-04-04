@@ -1,19 +1,18 @@
-<!--
-%% \VignetteTitle{E. Gene Set Enrichment}
-%% \VignetteEngine{knitr::rmarkdown}
--->
-
-```{r style, echo=FALSE, results='asis'}
-BiocStyle::markdown()
-```
-
 ---
 title: E. Gene Set Enrichiment
 author: Martin Morgan (mtmorgan@fredhutch.org)
 output:
   BiocStyle::html_document:
     toc: true
+vignette: >
+  %\VignetteIndexEntry{E. Gene Set Enrichment}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
 
 # Motivation
 

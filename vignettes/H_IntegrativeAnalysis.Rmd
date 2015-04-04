@@ -1,19 +1,18 @@
-<!--
-%% \VignetteTitle{H. Integrative Analysis}
-%% \VignetteEngine{knitr::rmarkdown}
--->
-
-```{r style, echo=FALSE, results='asis'}
-BiocStyle::markdown()
-```
-
 ---
 title: H. Integrative Analysis
 author: Martin Morgan (mtmorgan@fredhutch.org)
 output:
   BiocStyle::html_document:
     toc: true
+vignette: >
+  %\VignetteIndexEntry{H. Integrative Analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
+
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
 
 # Scope and opportunity
 
