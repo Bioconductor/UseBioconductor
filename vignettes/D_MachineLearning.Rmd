@@ -119,6 +119,14 @@ transcriptomic changes in four primary human ASM cell lines that were treated
 with dexamethasone - a potent synthetic glucocorticoid (1 micromolar for 
 18 hours).”
 
+```{r}
+data("airway")
+se <- airway
+colData(se)
+library("DESeq2")
+dds <- DESeqDataSet(se, design = ~ cell + dex)  @ 
+```
+
 For **Supervised learning**, we will use cervical count data from the
 Biocoductor package, `r Biocpkg("MLSeq")`. This data set contains
 expressions of 714 miRNA's of human samples. There are 29 tumor and 29
@@ -135,9 +143,9 @@ cervical = read.table(filepath, header = TRUE)
 ## Unsupervised Learning 
 
 Unsupervised Learning is a set of statistical tools intended for the setting
-in which we have only a set of features $X_1$, $X_2$, ....,$X_p$ measured 
-on 'n' observations. We are primarily interested in discovering interesting 
-things on the measurement $X_1$, $X_2$, ....,$X_p$
+in which we have only a set of 'p' features  measured on 'n' observations. 
+We are primarily interested in discovering interesting 
+things about the 'p' features. 
 
 Unsupervised Learning is often performed as a part of Exploratory Data Analysis. 
 These tools help us to get a good idea about the data set. Unlike a supervised
@@ -145,11 +153,130 @@ learning problem, where we can use prediction to gain some confidence about our
 learning algorithm, there is no way to check our model. The learning algorithm
 is thus, aptly named "unsupervised".
 
+**RLOG TRANSFORMATION** 
+
+Many common statistical methods for exploratory analysis of multidimensional 
+data, especially methods for clustering and ordination (e.g., 
+principal-component analysis and the like), work best for (at least 
+approximately) homoskedastic data; this means that the variance of an observed 
+quantity (here, the expression strength of a gene) does not depend on the mean. 
+
+In RNA-Seq data, the variance grows with the mean.If one performs PCA 
+(principal components analysis) directly on a matrix of normalized read counts,
+the result typically depends only on the few most strongly expressed genes 
+because they show the largest absolute differences between samples.
+
+As a solution, DESeq2 offers the regularized-logarithm transformation, or rlog 
+for short. See the help for ?rlog for more information and options. 
+
+The function rlog returns a SummarizedExperiment object which contains the 
+rlog-transformed values in its assay slot:
+
+```{r}    
+rld <- rlog(dds)   
+head(assay(rld))    
+```
+
+To assess overall similarity between samples: Which samples are similar to each 
+other, which are different? Does this fit to the expectation from the 
+experiment's design? We use the R function dist to calculate the Euclidean 
+distance between samples. To avoid that the distance measure is dominated by 
+a few highly variable genes, and have a roughly equal contribution from all 
+genes, we use it on the rlog-transformed data
+
+```{r}
+sampleDists <- dist( t( assay(rld) ) )
+sampleDists
+```
+Note the use of the function t to transpose the data matrix. We need this 
+because dist calculates distances between data rows and our samples constitute 
+the columns.
+
+**HEATMAP**
+
+We visualize the sample-to-sample distances in a heatmap, using the 
+function heatmap.2 from  the gplots package. Note that we have changed the row 
+names of the distance matrix to contain treatment type and patient number 
+instead of sample ID, so that we have all this information in view when 
+looking at the heatmap.
+
+```{r}
+library("gplots")
+library("RColorBrewer")
+
+sampleDistMatrix <- as.matrix( sampleDists )
+rownames(sampleDistMatrix) <- paste( rld$dex, rld$cell, sep="-" )
+colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+hc <- hclust(sampleDists)
+heatmap.2( sampleDistMatrix, Rowv=as.dendrogram(hc),
+          symm=TRUE, trace="none", col=colors,
+          margins=c(2,10), labCol=FALSE )
+
+```
+
+**PCA**
+
+Another way to visualize sample-to-sample distances is a principal-components 
+analysis (PCA). In this ordination method, the data points (i.e., here, the 
+samples) are projected onto the 2D plane such that they spread out in the two 
+directions which explain most of the differences in the data. The x-axis is 
+the direction (or principal component) which separates the data points the most.
+The amount of the total variance which is contained in the direction is 
+printed in the axis label. Here, we have used the function plotPCA which comes
+with DESeq2. The two terms specified by intgroup are the interesting groups 
+for labelling the samples; they tell the function to use them to choose colors. 
+
+```{r}
+plotPCA(rld, intgroup = c("dex", "cell"))
+```
+
+From both visualizations, we see that the differences between cells are 
+considerable, though not stronger than the differences due to treatment 
+with dexamethasone. This shows why it will be important to account for this 
+in differential testing by using a paired design (“paired”, because each dex 
+treated sample is paired with one untreated sample from the same cell line). 
+We are already set up for this by using the design formula ~ cell + dex when 
+setting up the data object in the beginning.
+
+**MDS**
+Another plot, very similar to the PCA plot, can be made using the 
+multidimensional scaling (MDS) function in base R. This is useful when we don't
+have the original data, but only a matrix of distances. Here we have the MDS 
+plot for the distances calculated from the rlog transformed counts:
+
+```{r}
+mds <- data.frame(cmdscale(sampleDistMatrix))
+mds <- cbind(mds, colData(rld))
+qplot(X1,X2,color=dex,shape=cell,data=mds)
+```
+
+### Exercise:
+Use the plotMDS function from the limma package to make a simila plot. 
+What is the advtange of using this function over base R's cmdscale?
+
+**Solutions:**
+
+A similar plot can be made using the plotMDS() function in limma where the input
+is a matrix of log-fold expression values. Here the advantage is that the 
+distances on plot are proportional to log2-fold change and not only is the plot
+created, but the object (with distance matrix) is also returned.
+
+```{r plotMDS}
+suppressPackageStartupMessages({
+   library(limma)
+   library(DESeq2)
+   library(airway)
+})
+plotMDS(rld, col=as.integer(dds$dex), pch=as.integer(dds$cell))
+```
+
+
+
 ## Supervised Learning 
 
-In supervised learning, along with the features $X_1$, $X_2$, ....,$X_p$, we 
+In supervised learning, along with the 'p' features, we 
 also have the a response Y measured on the same n observations. The goal is then
-to predict Y using $X_1$, $X_2$, ....,$X_p$ for new observations.
+to predict Y using X (n x p matrix) for new observations.
 
 For the cervical data, we know that the first 29 are non-Tumor samples 
 whereas the last 29 are Tumor samples. We will code these as 0 and 1 
