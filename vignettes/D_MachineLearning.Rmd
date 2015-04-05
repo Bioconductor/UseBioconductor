@@ -370,5 +370,10 @@ table(pred.rf, relevel(cervical.testS4$condition, 2))
 sessionInfo()
 ```
 
+## References 
 
+1. Zararsiz G, Goksuluk D, Korkmaz S, Eldem V, Duru IP, Unver T and Ozturk A (2014). MLSeq: Machine learning interface for RNA-Seq data. R package version 1.3.0.
+2. Himes, E. B, Jiang, X., Wagner, P., Hu, R., Wang, Q., Klanderman, B., Whitaker, M. R, Duan, Q., Lasky-Su, J., Nikolos, C., Jester, W., Johnson, M., Panettieri, A. R, Tantisira, G. K, Weiss, T. S, Lu and Q. (2014). “RNA-Seq Transcriptome Profiling Identifies CRISPLD2 as a Glucocorticoid Responsive Gene that Modulates Cytokine Function in Airway Smooth Muscle Cells.” PLoS ONE, 9(6), pp. e99625. http://www.ncbi.nlm.nih.gov/pubmed/24926665.
+3. An Introduction to Statistical Learning with Applications in R, Gareth James, Daniela Witten, Trevor Hastie and Robert Tibshirani
+4. The Elements of Statistical Learning: Data Mining, Inference, and Prediction. Trevor Hastie, Robert Tibshirani, Jerome Friedman
 
