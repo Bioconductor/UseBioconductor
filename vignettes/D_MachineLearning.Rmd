@@ -22,7 +22,7 @@ Lets say that we are interested in predicting the run time of an athlete
 depending on his shoe size, height and weight in a study of 100 people.
 We can do so using a simple linear regression model where 
 
-```{r}
+```{r eval=FALSE}
 y = beta0 + beta1 * height + beta2 * weight + beta3 * shoe_size 
 ```
 
