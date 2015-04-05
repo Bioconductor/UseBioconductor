@@ -116,7 +116,8 @@ transcriptomic changes in four primary human ASM cell lines that were treated
 with dexamethasone - a potent synthetic glucocorticoid (1 micromolar for 
 18 hours).”
 
-```{r}
+```{r message=FALSE}
+library(airway)
 data("airway")
 se <- airway
 colData(se)
@@ -197,7 +198,7 @@ names of the distance matrix to contain treatment type and patient number
 instead of sample ID, so that we have all this information in view when 
 looking at the heatmap.
 
-```{r}
+```{r message=FALSE}
 library("gplots")
 library("RColorBrewer")
 
