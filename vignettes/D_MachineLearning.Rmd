@@ -122,7 +122,7 @@ data("airway")
 se <- airway
 colData(se)
 library("DESeq2")
-dds <- DESeqDataSet(se, design = ~ cell + dex)  @ 
+dds <- DESeqDataSet(se, design = ~ cell + dex)  
 ```
 
 For **Supervised learning**, we will use cervical count data from the
@@ -243,9 +243,10 @@ have the original data, but only a matrix of distances. Here we have the MDS
 plot for the distances calculated from the rlog transformed counts:
 
 ```{r}
+library(ggplot2)
 mds <- data.frame(cmdscale(sampleDistMatrix))
 mds <- cbind(mds, colData(rld))
-qplot(X1,X2,color=dex,shape=cell,data=mds)
+qplot(X1,X2,color=dex,shape=cell,data=as.data.frame(mds))
 ```
 
 ### Exercise:
@@ -265,7 +266,7 @@ suppressPackageStartupMessages({
    library(DESeq2)
    library(airway)
 })
-plotMDS(rld, col=as.integer(dds$dex), pch=as.integer(dds$cell))
+plotMDS(assay(rld), col=as.integer(dds$dex), pch=as.integer(dds$cell))
 ```
 
 
