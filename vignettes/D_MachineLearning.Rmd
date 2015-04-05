@@ -32,14 +32,14 @@ depending on his shoe size, height and weight in a study of 100 people.
 We can do so using a simple linear regression model where 
 
 ```{r}
-y = beta0 + beta1 * height + beta2 * weight + beta3 * shoe size
+y = beta0 + beta1 * height + beta2 * weight + beta3 * shoe_size 
 ```
 
 Here y is the response variable (run time), n is the number of observations 
 (100 people), p is the number of variables/ features/ predictors (3 IE height, 
 weight, shoe size), X is a nxp matrix
 
-This data set is a low dimensional data where n >>p but most of the biological 
+This data set is a low dimensional data where n >> p but most of the biological 
 data sets coming out of modern biological techniques are high dimensional IE 
 n << p This poses statistical challenge and simple linear regression can no 
 longer help us.
@@ -52,8 +52,8 @@ For example,
 * Identify patterns of gene expression among different sub types of
   breast cancer
 
-In all of the 3 examples, listed above n, no of observations, is 30-40 patients
-whereas p, no of features, is approximately 30,000 genes. Try writing a linear 
+In all of the 3 examples, listed above n, number of observations, is 30-40 patients
+whereas p, number of features, is approximately 30,000 genes. Try writing a linear 
 regression formula for the outcome variable, y, in any of the above three 
 scenarios.. 
 
@@ -66,7 +66,7 @@ and then dive into examples and a lab session.
 
 **Supervised Learning** - Use a data set X to predict the association with a 
 response variable Y. The response variable can be continuous or categorical. 
-For example: Predict the chances of breast cancer survival in a patient.
+For example: Predicting the chances of breast cancer survival in a patient.
 
 **Unsupervised Learning** - Discover the associations or patterns in X. No 
 response variable is present. For example: Cluster similar genes into groups. 
@@ -79,26 +79,32 @@ on future data sets.
 **Model Selection** - We usually consider numerous models for a given problem. 
 For example, we are trying to identify the genes responsible for a given 
 disease using gene expression data set- we could have the following models
-a) model1 - all 30000 genes the array gives us 
-b) we include genes related to the pathway that we know is upregulated in 
-that disease
-c) genes found in literature which are known to influence this disease 
-So how do we pick the best model which can be tested on the test data set? 
-We can use different approaches here: validation set, leave one out 
-cross-validation, k-fold cross validation 
+a) model 1 - Use all 30000 genes from the array to build a model 
+b) model 2 - we include only genes related to the pathway that we know is 
+upregulated in that disease to build a model
+c) model 3 - include genes found in literature which are known to influence
+this disease 
+It is highly recommended to use the test set only on our final model to see
+how our model will do with new, unseen data. So how do we pick the best 
+model which can be tested on the test data set?  
 
-Briefly, the *validation set approach* deals with diving the full data sets into 
+**Cross-validation**
+We can use different approaches to find the best model. Lets look at the 
+commonly used approaches, namely, validation set, leave one out 
+cross-validation, k-fold cross validation. 
+
+Briefly, the __validation set approach__ deals with diving the full data sets into 
 3 groups - training set, validation set and the test set. We train the models on 
 the training set, evaluate their performance on the validation set and then the
 best model is chosen to fit on the test set. 
 
-The *leave one out cross validation* starts with fitting n models ( where n is
+The __leave one out cross validation__ starts with fitting n models (where n is
 number of observations in the training data set), each on n-1 observations, 
 evaluating each model on the left-out observation. The best model is the one 
 for which the total test error is the smallest and that is then used to predict 
 the test set. 
 
-Lastly the *5 fold cross validation* (here k=5), is splitting the training 
+Lastly the __5 fold cross validation__ (here k=5), is splitting the training 
 data set into 5 sets and repeatedly training the model on the other 4 sets and 
 evaluating the performance on the fifth.
 
