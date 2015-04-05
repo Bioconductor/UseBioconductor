@@ -1,12 +1,3 @@
-<!--
-%% \VignetteTitle{D. Machine Learning}
-%% \VignetteEngine{knitr::rmarkdown}
--->
-
-```{r style, echo=FALSE, results='asis'}
-BiocStyle::markdown()
-```
-
 ---
 title: D. Machine Learning
 author:
@@ -15,15 +6,15 @@ author:
 output:
   BiocStyle::html_document:
     toc: true
+vignette: >
+  %\VignetteIndexEntry{D. Machine Learning}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
-## Contents
-
-* [Introduction to Machine Learning](#intro) 
-* [Datasets](#data)
-* [Unsupervised Learning](#unsup)
-* [Supervised Learning](#sup)
-
+```{r style, echo=FALSE, results='asis'}
+BiocStyle::markdown()
+```
 
 ## Introduction to Machine Learning 
 
