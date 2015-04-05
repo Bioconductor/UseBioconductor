@@ -12,6 +12,11 @@ vignette: >
 
 ```{r style, echo=FALSE, results='asis'}
 BiocStyle::markdown()
+suppressPackageStartupMessages({
+    library(rtracklayer)
+    library(BiocParallel)
+    library(GenomicFiles)
+})
 ```
 
 # Motivation
@@ -35,6 +40,7 @@ BiocStyle::markdown()
 
 ```{r rtracklayer-file-classes}
 ## rtracklayer menagerie
+library(rtracklayer)
 names(getClass("RTLFile")@subclasses)
 ```
 
