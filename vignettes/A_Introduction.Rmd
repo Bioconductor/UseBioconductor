@@ -1,6 +1,7 @@
 ---
 title: "A. Introduction: Use R / Bioconductor for Sequence Analysis"
 author: Martin Morgan (mtmorgan@fredhutch.org)
+date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document:
     toc: true

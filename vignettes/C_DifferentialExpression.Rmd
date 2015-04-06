@@ -1,6 +1,7 @@
 ---
 title: C. Differential Expression
 author: Martin Morgan (mtmorgan@fredhutch.org)
+date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document:
     toc: true
