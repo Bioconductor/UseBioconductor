@@ -1,7 +1,7 @@
 Package: UseBioconductor
 Type: Package
 Title: Use R / Bioconductor for Sequence Analysis
-Version: 0.0.6
+Version: 0.0.7
 Authors@R: c(person("Martin", "Morgan", role=c("aut", "cre"),
                     email="mtmorgan@fhcrc.org"),
              person("Herve", "Pages", role="aut"))
@@ -17,10 +17,11 @@ Description: This course is directed at intermediate users wanting to
     modern version of the Chrome or Safari web browser.
 Imports: devtools
 Suggests: ALL, AnnotationHub, BSgenome.Hsapiens.UCSC.hg19,
-    BiocInstaller, BiocParallel, BiocStyle, Biostrings, DESeq2, GO.db,
-    GenomicAlignments, GenomicFeatures, GenomicFiles, Gviz, MLSeq,
-    PoiClaClu, RColorBrewer, RNAseqData.HNRNPC.bam.chr14, Rsamtools,
-    ShortRead, TxDb.Hsapiens.UCSC.hg19.knownGene, VariantAnnotation,
-    airway, class, cn.mops, csaw, dendextend, e1071, edgeR, fission,
-    genefilter, ggplot2, goseq, gplots, httr, kernlab, knitr,
-    microbenchmark, org.Hs.eg.db, shiny, sva, xtable
+    BiocInstaller, BiocParallel, BiocStyle, Biostrings, ChIPseeker,
+    DESeq2, GO.db, GenomicAlignments, GenomicRanges, GenomicFeatures,
+    GenomicFiles, Gviz, MLSeq, PoiClaClu, RColorBrewer,
+    RNAseqData.HNRNPC.bam.chr14, Rsamtools, ShortRead,
+    TxDb.Hsapiens.UCSC.hg19.knownGene, VariantAnnotation, airway,
+    class, cn.mops, csaw, dendextend, e1071, edgeR, fission,
+    genefilter, ggplot2, goseq, gplots, httr, kernlab, knitr, limma,
+    microbenchmark, org.Hs.eg.db, rtracklayer, shiny, sva, xtable

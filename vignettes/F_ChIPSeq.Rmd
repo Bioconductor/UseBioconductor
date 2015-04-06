@@ -370,7 +370,7 @@ data <- data[keep,]
 
 ```{r csaw-data-load, echo=FALSE}
 frag.len <- 110
-fl <- system.file(package="UseBioconductor", "data", "csaw-data-filtered.Rds")
+fl <- system.file(package="UseBioconductor", "extdata", "csaw-data-filtered.Rds")
 data <- readRDS(fl)
 ```
 
@@ -390,7 +390,7 @@ system.time({
 normfacs <- normalize(binned)
 ```
 ```{r csaw-normacs-load, echo=FALSE}
-fl <- system.file(package="UseBioconductor", "data", "csaw-normfacs.Rds")
+fl <- system.file(package="UseBioconductor", "extdata", "csaw-normfacs.Rds")
 normfacs <- readRDS(fl)
 ```
 
