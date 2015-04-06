@@ -216,7 +216,7 @@ Goals
 Ingredients
 - `r Biocpkg("BSgenome.Hsapiens.UCSC.hg19")` BSGenome package
 - `r Biocpkg("TxDb.Hsapiens.UCSC.hg19")` TxDb package
-- `getSeq,BSgenome-method`
+- `?"getSeq,BSgenome-method"`, `letterFrequency()`
 
 Goapls
 
@@ -229,7 +229,8 @@ Ingredients
 
 - `DNAStringSet()` to construct CG island sequence
 - `matchPDict()` to find CG islands on BSgenome chromosomes
-- ?? `coverage()`, `tileGenome()`, `Views()`, following [Hints](https://support.bioconductor.org/p/65281/)
+- ?? `coverage()`, `tileGenome()`, `Views()`, following
+  [Hints](https://support.bioconductor.org/p/65281/)
 - ?? `tileGenome()`, `findOverlaps()`, `splitAsList()`, `mean()`
 
 Goal
@@ -244,11 +245,12 @@ Ingredients
   `RNAseqData.HNRNPC.bam.chr14_BAMFILES`
 - `readGAlignments()`, `readGAlignmentPairs()`, and
   `readGAlignmentsList()`
-- `BamFile()`n
+- `BamFile()`
   
 Goals
 
 - Compare three input methods
 - Use `ScanBamParam()` `which` and `what` to selective input data
+- `countOverlaps()` between reads and known genes
 - Use `BamFile()` `yieldSize` argument to iterate through file
 
