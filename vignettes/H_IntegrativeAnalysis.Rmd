@@ -1,5 +1,5 @@
 ---
-title: H. Integrative Analysis
+title: "H. Integrative Analysis"
 author: Martin Morgan (mtmorgan@fredhutch.org)
 date: "`r Sys.Date()`"
 output:
