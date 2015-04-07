@@ -17,14 +17,49 @@ suppressPackageStartupMessages({
     library(rtracklayer)
     library(BiocParallel)
     library(GenomicFiles)
+    library(TxDb.Hsapiens.UCSC.hg19.knownGene)
 })
 ```
 
-# Motivation
+# Scalabe computing
 
-# Efficient R
+Efficient _R_ code
 
-# File management with `r Biocpkg("GenomicFiles")`
+- Vectorize!
+- Reuse others' work -- `r Biocpkg("DESeq2")`,
+  `r Biocpkg("GenomicRanges")`, `r Biocpkg("Biostrings")`, ...,
+  `r CRANpkg("dplyr")`, `r CRANpkg("data.table")`, `r CRANpkg("Rcpp")`
+- Useful tools: `system.time()`, `Rprof()`, `r CRANpkg("microbenchmark")`
+- More detail in
+  [deadly sins](http://bioconductor.org/help/course-materials/2014/CSAMA2014/1_Monday/labs/IntermediateR.html#efficient-code)
+  of a previous course.
+
+Iteration
+
+- Chunk-wise
+- `open()`, read chunk(s), `close()`.
+- e.g., `yieldSize` argument to `Rsamtools::BamFile()`
+
+Restriction
+
+- Limit to columns and / or rows of interest
+- Exploit domain-specific formats, e.g., BAM files and
+  `Rsamtools::ScanBamParam()`
+- Use a data base
+
+Sampling
+
+- Iterate through large data, retaining a manageable sample, e.g.,
+  `ShortRead::FastqSampler()`
+
+Parallel evaluation
+
+- **After** writing efficient code
+- Typically, `lapply()`-like operations
+- Cores on a single machine ('easy'); clusters (more tedious);
+  clouds
+
+# File management
 
 ## File classes
 
@@ -33,6 +68,7 @@ suppressPackageStartupMessages({
 | .bed  | Range annotations     | `BedFile()`                 | `r Biocpkg("rtracklayer")`       |
 | .wig  | Coverage              | `WigFile()`, `BigWigFile()` | `r Biocpkg("rtracklayer")`       |
 | .gtf  | Transcript models     | `GTFFile()`                 | `r Biocpkg("rtracklayer")`       |
+|       |                       | `makeTxDbFromGFF()`         | `r Biocpkg("GenomicFeatures")`   |
 | .2bit | Genomic Sequence      | `TwoBitFile()`              | `r Biocpkg("rtracklayer")`       |
 | .fastq | Reads & qualities    | `FastqFile()`               | `r Biocpkg("ShortRead")`         |
 | .bam  | Aligned reads         | `BamFile()`                 | `r Biocpkg("Rsamtools")`         |
@@ -57,7 +93,7 @@ Notes
 `*FileList()` classes
 
 - `reduceByYield()` -- iterate through a single large file
-- `bplappyl()` (`r Biocpkg("BiocParallel")`) -- perform independent
+- `bplapply()` (`r Biocpkg("BiocParallel")`) -- perform independent
   operations on several files, in parallel
 
 `GenomicFiles()`
@@ -67,17 +103,190 @@ Notes
   in _R_
 - `reduceByRange()`, `reduceByFile()`: collapse maps into summary
   representation
+- see the GenomicFiles vignette
+  [Figure 1](http://bioconductor.org/packages/devel/bioc/vignettes/GenomicFiles/inst/doc/GenomicFiles.pdf)
 
-# Parallel evaluation `r Biocpkg("BiocParallel")`
+# Parallel evaluation with BiocParallel
 
-## Cores
+Standardized interface for simple parallel evaluation.
 
-## In-house Clusters
+- `bplapply()` instead of `lapply()`
+- Argument `BPPARAM` influences how parallel evaluation occurs
 
-## Clouds
+    - `MulticoreParam()`: threads on a single (non-Windows) machine
+    - `SnowParam()`: processes on the same or different machines
+    - `BatchJobsParam()`: resource scheduler on a cluster
 
-_Ad hoc_ via Amazon Web Services
+Other resources
 
-Google genomics
+- [Bioconductor Amazon AMI](http://bioconductor.org/help/bioconductor-cloud-ami/)
 
-Others
+    - easily 'spin up' 10's of instances
+    - Pre-configured with Bioconductor packages and StarCluster
+      management
+   
+- `r Biocpkg("GoogleGenomics")` to interact with google compute cloud
+  and resources
+
+
+# Practical
+
+### Efficient code
+
+Define following as a function. 
+
+```{r benchmark-f0}
+f0 <- function(n) {
+    ## inefficient!
+    ans <- numeric()
+    for (i in seq_len(n))
+        ans <- c(ans, exp(i))
+    ans
+}
+```
+
+Use `system.time()` to explore how long this takes to execute as `n`
+increases from 100 to 10000. Use `identical()` and 
+`r CRANpkg("microbenchmark")` to compare alternatives `f1()`, `f2()`, and
+`f3()` for both correctness and performance of these three different
+functions. What strategies are these functions using?
+
+```{r benchmark}
+f1 <- function(n) {
+    ans <- numeric(n)
+    for (i in seq_len(n))
+        ans[[i]] <- exp(i)
+    ans
+}
+
+f2 <- function(n)
+    sapply(seq_len(n), exp)
+
+f3 <- function(n)
+    exp(seq_len(n))
+```
+
+### Sleeping serially and in parallel
+
+Go to sleep for 1 second, then return `i`. This takes 8 seconds.
+
+```{r parallel-sleep}
+library(BiocParallel)
+
+fun <- function(i) {
+    Sys.sleep(1)
+    i
+}
+
+## serial
+f0 <- function(n)
+    lapply(seq_len(n), fun)
+
+## parallel
+f1 <- function(n)
+    bplapply(seq_len(n), fun)
+```
+
+## Reads overlapping windows
+
+This exercise uses the following packages:
+
+```{r csaw-packages}
+library(GenomicAlignments)
+library(GenomicFiles)
+library(BiocParallel)
+library(Rsamtools)
+library(GenomeInfoDb)
+```
+
+This is a re-implementation of the basic `r Biocpkg("csaw")` binned
+counts algorithm. It supposes that ChIP fragment lengths are 110 nt,
+and that we bin coverage in windows of width 50. We focus on chr1.
+
+```{r olaps-chr}
+frag.len <- 110
+spacing <- 50
+chr <- "chr1"
+```
+
+Here we point to the bam files, indicating that we'll process the
+files in chunks of size 1,000,000.
+
+```{r olaps-tileGenome}
+fls <- dir("~/UseBioconductor-data/ChIPSeq/NFYA/", ".BAM$", full=TRUE)
+names(fls) <- sub(".fastq.*", "", basename(fls))
+bfl <- BamFileList(fls, yieldSize=1000000)
+```
+
+We'll creating the counting bins using `tileGenome()`, focusing the
+'standard' chromosomes'
+
+```{r csaw-tiles}
+len <- seqlengths(keepStandardChromosomes(seqinfo(bfl)))[chr]
+tiles <- tileGenome(len, tilewidth=spacing, cut.last.tile.in.chrom=TRUE)
+```
+
+We'll use `reduceByYield()` to iterate through a single file. We read
+to tell this function we'll `YIELD` a chunk of the file, how we'll
+`MAP` the chunk from it's input representation to the per-window
+counts, and finally how we'll `REDUCE` successive chunks into a final
+representation.
+
+`YIELD` is supposed to be a function that takes one argument, the
+input source, and returns a chunk of records
+
+```{r yield}
+yield <- function(x, ...)
+    readGAlignments(x)
+```
+
+`MAP` must take the output of yield and perhaps additional arguments,
+and return a vector of counts. We'll resize the genomic ranges
+describing the alignment so that they have a width equal to the
+fragment length
+
+```{r map}
+map <- function(x, tiles, frag.len, ...) {
+   gr <- keepStandardChromosomes(granges(x))
+   countOverlaps(tiles, resize(gr, frag.len))
+}
+```
+
+`REDUCE` takes two results from `MAP` (in our case, vectors of counts)
+and combines them into a single result. We simply add our vectors (`+`
+is actually a function!)
+
+```{r reduce}
+reduce <- `+`
+```
+
+To process one file, we use `reduceByYield()`, passing the file we
+want to process, the yield, map, and reduce functions. Our 'wrapper'
+function passes any additional arguments through to `reduceByYield()`
+using `...`:
+
+```{r reduceByYield}
+count1file <- function(bf, ...)
+    reduceByYield(bf, yield, map, reduce, ...)
+```
+
+Using `yieldSize` and `reduceByYield()` means that we do not consume
+too much memory processing each file, so that we can process files in
+parallel using `r Biocpkg("BiocParallel")`. The `simplify2array()`
+function transforms a list-of-vectors to a matrix.
+
+```{r count-overlaps-parallel, eval=FALSE}
+counts <- bplapply(bfl, count1file, tiles=tiles, frag.len=frag.len)
+counts <- simplify2array(counts)
+dim(counts)
+colSums(counts)
+```
+
+# Resources
+
+- Lawrence, M, and Morgan, M. 2014. Scalable Genomics with R and
+  Bioconductor. Statistical Science 2014, Vol. 29, No. 2,
+  214-226. http://arxiv.org/abs/1409.2864v1
+
+[BiocParallel]: http://bioconductor.org/packages/release/bioc/html/BiocParallel.html
+[GenomicFiles]: http://bioconductor.org/packages/release/bioc/html/GenomicFiles.html
