@@ -41,17 +41,13 @@ Day 1 (9:00 - 12:30; 1:30 - 5:00)
   [DESeq2](http://bioconductor.org/packages/devel/bioc/html/DESeq2.html)
   and
   [edgeR](http://bioconductor.org/packages/devel/bioc/html/edgeR.html).
-- [D. Machine Learning](vignettes/D_MachineLearning.Rmd).
-- [E. Gene Set Enrichment](vignettes/E_GeneSetEnrichment.Rmd).
 
 Day 2 (9:00 - 12:30; 1:30 - 5:00)
 
+- [D. Machine Learning](vignettes/D_MachineLearning.Rmd).
+- [E. Gene Set Enrichment](vignettes/E_GeneSetEnrichment.Rmd).
 - [F. ChIP-seq](vignettes/F_ChIPSeq.Rmd) ChIP-seq with
   [csaw](http://bioconductor.org/packages/devel/bioc/html/csaw.html)
-- [G. Methylation](vignettes/G_Methylation.Rmd) and regulatory work flows with
-  [minfi](http://bioconductor.org/packages/devel/bioc/html/minfi.html).
-- [H. Integrative Data Analysis](vignettes/H_IntegrativeAnalysis.Rmd) -- emerging
-  approaches
 - [I. Large Data](vignettes/I_LargeData.Rmd) -- efficient, parallel, and cloud
   programming with
   [BiocParallel](http://bioconductor.org/packages/devel/bioc/html/BiocParallel.html),
