@@ -33,7 +33,7 @@ Key references
 
 - Kharchenko, Tolstorukov, and Park
   ([2008](http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2597701/)).
-- Lun and Smyth ([2014](http://dx.doi.org/10.1093/nar/gku351)).
+- Lun and Smyth ([2014](https://doi.org/10.1093/nar/gku351)).
 
 ## ChIP-seq
 
@@ -62,7 +62,7 @@ Novel statistical issues
 ## Work flow
 
 - Following Bailey et al.,
-  [2013](http://dx.doi.org/10.1371/journal.pcbi.1003326)
+  [2013](https://doi.org/10.1371/journal.pcbi.1003326)
 
 ![](our_figures/ChIPSeq-workflow.png)
 
@@ -86,7 +86,7 @@ Sequencing & alignment
   regions
 - Basic aligners generally adequate, e.g., no need to align splice
   junctions
-- Sims et al., [2014](http://dx.doi.org/10.1038/nrg3642)
+- Sims et al., [2014](https://doi.org/10.1038/nrg3642)
 
 Peak calling
 
@@ -95,7 +95,7 @@ Peak calling
 - Commmonly used: [MACS](http://liulab.dfci.harvard.edu/MACS/),
   PeakSeq, CisGenome, ...
 - MACS: Model-based Analysis for ChIP-Seq, Liu et al.,
-  [2008](http://dx.doi.org/10.1186/gb-2008-9-9-r137)
+  [2008](https://doi.org/10.1186/gb-2008-9-9-r137)
 
     - Scale control tag counts to match ChIP counts
     - Center peaks by shifting $d/2$
@@ -307,7 +307,7 @@ detail can be found.
 The experiment involves changes in binding profiles of the NFYA
 protein between embryonic stem cells and terminal neurons. It is a
 subset of the data provided by Tiwari et
-al. [2012](http://dx.doi.org/10.1038/ng.1036) available as
+al. [2012](https://doi.org/10.1038/ng.1036) available as
 [GSE25532](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE25532). There
 are two es (embryonic stem cell) and two tn (terminal neuron)
 replicates. Single-end FASTQ files were extracted from GEO, aligned

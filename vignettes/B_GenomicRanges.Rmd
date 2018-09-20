@@ -28,7 +28,7 @@ Genomic ranges describe...
 - Data, e.g., aligned reads, called peaks, copy number regions
 - See Lawrence et al., Software for computing and annotating genomic
   ranges, PLoS Comput Biol 9(8):
-  [e1003118](http://dx.doi.org/10.1371/journal.pcbi.1003118)
+  [e1003118](https://doi.org/10.1371/journal.pcbi.1003118)
 
 Packages
 
@@ -91,7 +91,7 @@ Between-object
 ![](our_figures/journal.pcbi.1003118.t001.png)
 
 PLoS Comput Biol 9(8):
-[e1003118](http://dx.doi.org/10.1371/journal.pcbi.1003118)
+[e1003118](https://doi.org/10.1371/journal.pcbi.1003118)
 
 # Working with _Bioconductor_ classes and methods
 
