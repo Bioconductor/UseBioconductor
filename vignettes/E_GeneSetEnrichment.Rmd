@@ -274,7 +274,7 @@ This practical is based on section 6 of the `r Biocpkg("goseq")`
 
 This (relatively old) experiment examined the effects of androgen
 stimulation on a human prostate cancer cell line, LNCaP (Li et al.,
-[2008](http://dx.doi.org/10.1073/pnas.0807121105)). The experiment
+[2008](https://doi.org/10.1073/pnas.0807121105)). The experiment
 used short (35bp) single-end reads from 4 control and 3 untreated
 lines. Reads were aligned to hg19 using Bowtie, and counted using
 ENSEMBL 54 gene models.
